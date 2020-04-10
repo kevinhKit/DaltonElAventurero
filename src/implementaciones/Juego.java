@@ -23,11 +23,10 @@ public class Juego extends Application{
 	//DECLARACION DE VARIABLES
 	private int anchoventana = 1100 ;//ASIGNACION DE TAMAÑO SIMULTANEO, TANTO PARA EL OBJETO SCENE Y PARA EL OBJETO CANVAS 
 	private int altoventana = 700 ;
-	public static boolean derecha;//DEPENDENCIA DE MOVIMIENTO
+	public static boolean derecha;
 	public static boolean izquierda;
 	public static boolean arriba;
 	public static boolean abajo;
-	//DECLARACION DE OBJETOS , ARREGLOS , COLECCIONES , 
 	private Group root;
 	private Scene escena;
 	private Canvas lienzo;
@@ -65,8 +64,8 @@ public class Juego extends Application{
 			{0,0,0,1,0,0,1,0,0,1},
 			{0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0},//DISPAROS ENCAPSULAR COORDENA X INCREMENTAR COORDENADA Y CADA 0.25 SEGUNDOS
-			{0,0,0,1,0,0,1,0,0,1},//MOVIMIENTOS DE ENEMIGOS COMPARAR COORDENADA DEL PERSONADE CON LA DEL ENEMIGO
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,1,0,0,1,0,0,1},
 			{0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,1,0,0,1,0,0,1},
 			{0,0,0,0,0,1,0,0,0,0,0},
@@ -171,6 +170,59 @@ public class Juego extends Application{
 			{3,3,2,1,1,1,1,1,1,1,7,7,1,1,1,1,1,1,1,2,3,3},
 			{3,3,2,2,2,2,1,1,1,1,7,7,1,1,1,1,2,2,2,2,3,3},
 			{3,3,3,3,3,2,1,1,1,1,7,7,1,1,1,1,2,3,3,3,3,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+			{3,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,3},
+			{3,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,3},
+			{3,12,12,13,13,14,14,15,15,16,16,17,17,18,18,0,0,0,0,0,0,3},
+			{3,12,12,13,13,14,14,15,15,16,16,17,17,18,18,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			
 	};
 	public static void main(String[] args) {
 		launch();
@@ -191,8 +243,7 @@ public class Juego extends Application{
 		escena = new Scene( root , anchoventana , altoventana);
 		lienzo = new Canvas( anchoventana, altoventana);
 		root.getChildren().add(lienzo);
-		graficos = lienzo.getGraphicsContext2D();
-		//////////////////////////graficos.setGlobalAlpha(0.6);
+		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
 		jugadorAnimado = new JugadorAnimado( 0 , 600 , 3 , "personaje" , 0 , "descanso1" );
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
 		vidaTotal = new Item(0 , 976 , 103 , 2 , "vidat" , 0 , 1 );
@@ -205,7 +256,7 @@ public class Juego extends Application{
 		for ( int i = 0 ; i < tilemaps.length ; i++ ) {
 			for( int j = 0 ; j < tilemaps[i].length ; j++ ) {
 				if(tilemaps[i][j]!=0) {
-					this.tiles.add(new Tile ( tilemaps[i][j], j*50 ,i*50 , 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( tilemaps[i][j], j*50 ,i*50 -5000 , 2, "tile", 50, 50));
 					
 				}
 			}
@@ -214,11 +265,11 @@ public class Juego extends Application{
 		for ( int i = 0 ; i < tilemap2.length ; i++ ) {
 			for( int j = 0 ; j < tilemap2[i].length ; j++ ) {
 				if(tilemap2[i][j]!=0) {
-					this.tile2.add(new Tile ( tilemap2[i][j], j*80 ,i*100 , 2, "tile2", 80, 100));
+					this.tile2.add(new Tile ( tilemap2[i][j], j*80 ,i*100 -5000, 2, "tile2", 80, 100));
 				}
 			}
 		}
-		items = new ArrayList<Item>();
+//		items = new ArrayList<Item>();
 //		for ( int i = 0 ; i < escenarioItem.length ; i++ ) {
 //			for( int j = 0 ; j < escenarioItem[i].length ; j++ ) {
 //				if(escenarioItem[i][j]!=0) {
@@ -258,7 +309,7 @@ public class Juego extends Application{
 					jugadorAnimado.setAnimacionActual("abajo");
 					break;
 				case "SPACE":
-					//DESDE AQUI ACCEDO A LA VELOCIDAD DEL USUARIO Y AL TIEMPO DE DURACION QUE CAMBBIAN ESTRE FRAME
+					//DESDE AQUI ACCEDO A LA VELOCIDAD DEL USUARIO Y AL TIEMPO DE DURACION QUE CAMBIAN ESTRE FRAME
 					break;
 				}	
 			}		
@@ -332,3 +383,6 @@ public class Juego extends Application{
 	}
 
 }
+//DISPAROS ENCAPSULAR COORDENA X INCREMENTAR COORDENADA Y CADA 0.25 SEGUNDOS
+//MOVIMIENTOS DE ENEMIGOS COMPARAR COORDENADA DEL PERSONADE CON LA DEL ENEMIGO
+//condicionan compara de corrdenadas para pintar o invertir el orden de pintado.

@@ -61,13 +61,13 @@ public class Tile extends ObjetoJuego {
 				anchoImagen = 40;
 				altoImagen = 40;
 				break;
-			case 7:		//CAMBIAR POR UN TILE CORRECTO
+			case 7:	
 				xImagen=557;
 				yImagen=179;
 				anchoImagen = 40;
 				altoImagen = -40;
 				break;	
-			case 8:		//CAMBIAR POR UN TILE CORRECTO
+			case 8:	
 				xImagen=555;
 				yImagen=99;
 				anchoImagen = 40;
@@ -79,24 +79,58 @@ public class Tile extends ObjetoJuego {
 				anchoImagen = 40;
 				altoImagen = 40;
 				break;
-			case 10:		//CAMBIAR POR UN TILE CORRECTO
+			case 10:
 				xImagen=557;
 				yImagen=139;
 				anchoImagen = 40;
 				altoImagen = 40;
 				break;
-			case 11:		//CAMBIAR POR UN TILE CORRECTO
+			case 11:
 				xImagen=557;
 				yImagen=159;
 				anchoImagen = 40;
 				altoImagen = 40;
 				break;
-			case 12:		//CAMBIAR POR UN TILE CORRECTO
+			case 12:
 				xImagen=479;//519,792
 				yImagen=763+30;
 				anchoImagen = 40;
 				altoImagen = -30;
 				break;
+			case 14:
+				xImagen=319;
+				yImagen=258+30;
+				anchoImagen = 40;
+				altoImagen = -30;
+				break;
+			case 15:
+				xImagen=478;
+				yImagen=258;
+				anchoImagen = 39;
+				altoImagen = -30;
+				break;
+
+			case 16:
+				xImagen=398;
+				yImagen=256;
+				anchoImagen = 40;
+				altoImagen = -30;
+				break;
+
+			case 17:
+				xImagen=437;
+				yImagen=438+4;
+				anchoImagen = 40;
+				altoImagen = 30;
+				break;
+
+			case 18:
+				xImagen=319;
+				yImagen=258+30;
+				anchoImagen = 40;
+				altoImagen = -30;
+				break;
+
 
 //			case 11:		//CAMBIAR POR UN TILE CORRECTO
 //				xImagen=597;

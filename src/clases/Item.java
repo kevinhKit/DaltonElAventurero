@@ -7,12 +7,14 @@ import javafx.scene.shape.Rectangle;
 public class Item extends ObjetoJuego{
 private int puntos;
 private int vidas;
+private int tipoItem;
 private boolean capturado = false;
 
-	public Item(int x, int y, int velocidad, String nombreimagen, int puntos, int vidas) {
+	public Item(int tipoItem ,int x, int y, int velocidad, String nombreimagen, int puntos, int vidas) {
 	super(x, y, velocidad, nombreimagen);
 	this.puntos = puntos;
 	this.vidas = vidas;
+	this.tipoItem = tipoItem;
 }
 
 	@Override

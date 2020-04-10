@@ -42,7 +42,19 @@ public class Juego extends Application{
 	private Item disparo;
 	private ArrayList<Tile> tiles;
 	private ArrayList<Tile> tile2;
+	private ArrayList<Item> items;
 	public static HashMap< String, Image> imagenes;
+	private int escenarioItem[][]= {
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+			{0,0,1,2,3,4,5,6,7,8,9,10},
+	};
 	private int tilemap2[][] = {
 			{0,0,0,0,1,1,2,2,3,3},
 			{0,0,0,0,0,0,0,0,0,0},
@@ -183,7 +195,7 @@ public class Juego extends Application{
 		//////////////////////////graficos.setGlobalAlpha(0.6);
 		jugadorAnimado = new JugadorAnimado( 0 , 600 , 3 , "personaje" , 0 , "descanso1" );
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
-		vidaTotal = new Item( 976 , 103 , 2 , "vidat" , 0 , 1 );
+		vidaTotal = new Item(0 , 976 , 103 , 2 , "vidat" , 0 , 1 );
 		imagenes = new HashMap< String , Image>();
 		cargarImagenes();
 		inicializarTileMaps();
@@ -206,6 +218,14 @@ public class Juego extends Application{
 				}
 			}
 		}
+		items = new ArrayList<Item>();
+//		for ( int i = 0 ; i < escenarioItem.length ; i++ ) {
+//			for( int j = 0 ; j < escenarioItem[i].length ; j++ ) {
+//				if(escenarioItem[i][j]!=0) {
+//					this.items.add(new Item ( escenarioItem[i][j], j*80 ,i*100 , 2, "vidat", 0, 0));
+//				}
+//			}
+//		}
 	}
 	public void cargarImagenes() {
 		imagenes.put( "fuego" , new Image("LIENZO1.png"));

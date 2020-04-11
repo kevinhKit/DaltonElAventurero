@@ -125,8 +125,14 @@ public class Tile extends ObjetoJuego {
 				break;
 
 			case 18:
-				xImagen=319;
-				yImagen=258+30;
+				xImagen=557;
+				yImagen=442;
+				anchoImagen = 40;
+				altoImagen = 30;
+				break;
+			case 19:
+				xImagen=478;
+				yImagen=438;
 				anchoImagen = 40;
 				altoImagen = -30;
 				break;

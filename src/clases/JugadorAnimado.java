@@ -119,6 +119,11 @@ public class JugadorAnimado extends ObjetoJuego {
 			if( x <= 32 ) {
 				this.x = 32;
 			}
+//			if(y3<=500) {
+//				if( x >= 1050 ) {
+//					this.x = -32;
+//				}
+//			}
 			if( x >= 956 ) {
 				this.x = 955;
 			}

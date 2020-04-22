@@ -402,3 +402,4 @@ public class Juego extends Application{
 //DISPAROS ENCAPSULAR COORDENA X INCREMENTAR COORDENADA Y CADA 0.25 SEGUNDOS
 //MOVIMIENTOS DE ENEMIGOS COMPARAR COORDENADA DEL PERSONADE CON LA DEL ENEMIGO
 //condicionan compara de corrdenadas para pintar o invertir el orden de pintado.
+//movimiento escenario solo en el centro

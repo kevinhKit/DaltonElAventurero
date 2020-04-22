@@ -1,5 +1,6 @@
 package clases;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import implementaciones.Juego;
@@ -106,7 +107,7 @@ public class JugadorAnimado extends ObjetoJuego {
 		@Override
 		public void pintar(GraphicsContext graficos) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			//graficos.strokeRect( x + 29 , y + 10 + 10 , anchoImprimir -34 -29, altoImprimir -20 - 10 -10 );
+			graficos.strokeRect( x + 29 , y + 10 + 10 , anchoImprimir -34 -29, altoImprimir -20 - 10 -10 );
 		}
 		@Override
 		public void mover(int y3) {	
@@ -115,21 +116,21 @@ public class JugadorAnimado extends ObjetoJuego {
 			}
 			if( y >= 631) {
 				this.y = 630 ;
-			}
-			if( x <= 32 ) {
-				this.x = 32;
-			}
+			}/////////////COLOCAR QUE NO SALGA DE LA PANTALLA EL PERSONAJE SINO QUE SOLO DEL CENTRO DEL ESCENARIO PUEDA AVANZAR
+//												if( x <= 32 ) {
+//													this.x = 32;
+//												}
 //			if(y3<=500) {
 //				if( x >= 1050 ) {
 //					this.x = -32;
 //				}
-//			}
-			if( x >= 956 ) {
-				this.x = 955;
+//			}////////////////////////////////////////
+//			if( x >= 956 ) {
+//				this.x = 955;
+//			}////////////////////
+			if( x >= 1000 ) {
+				this.x = -100;
 			}
-//			if( x >= 761 ) {
-//				this.x = 760;
-//			}
 			if(Juego.derecha) {
 				this.x += velocidad ;
 			}
@@ -178,12 +179,50 @@ public class JugadorAnimado extends ObjetoJuego {
 		public void verificarColisionesItem(Item item) {
 			if(!item.isCapturado() && this.obtenerRegtangulo().getBoundsInLocal().intersects(item.obtenerRegtangulo().getBoundsInLocal())) {
 				item.setCapturado(true);
-				this.vidas = item.getVidas();
+				this.vidas = this.vidas + item.getVidas();
 			}
 		}
-		public void verificarColisionesTile(int [][]tile) {
-			for(int i = 0 ; i < tile.length ; i++ ) {
-				
+		public void verificarColisionesTile(ArrayList<Tile> tiles) {
+			for(int i = 0 ; i < tiles.size() ; i++ ) {
+				if( tiles.get(i).getTipotile() == 3 ) {
+					if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+						//System.out.println("JAJAJA");
+						this.vidas = this.vidas + 1;
+						////
+//						if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+							//System.out.println("COLISIONANDO");
+						if(this.obtenerRegtangulo().getX()>=tiles.get(i).obtenerRegtangulo().getX()) {
+							this.x=(int)this.obtenerRegtangulo().getX()-1-1-1-1-1-1-1-19;
+						}
+						if(this.obtenerRegtangulo().getX()<=tiles.get(i).obtenerRegtangulo().getX()) {
+							this.x=(int)this.obtenerRegtangulo().getX()-32;
+						}
+						if(this.obtenerRegtangulo().getY()>=tiles.get(i).obtenerRegtangulo().getY()) {
+							this.y=(int)this.obtenerRegtangulo().getY() - 17 ;
+						}
+						if(this.obtenerRegtangulo().getY()<=tiles.get(i).obtenerRegtangulo().getY()) {
+							this.y=(int)this.obtenerRegtangulo().getY() - 23 ;
+						}
+						if(this.obtenerRegtangulo().getX()>=tiles.get(i).obtenerRegtangulo().getX() && this.obtenerRegtangulo().getY()>=tiles.get(i).obtenerRegtangulo().getY() ) {
+							this.x=(int)this.obtenerRegtangulo().getX()-1-1-1-1-1-1-1-19;
+							this.y=(int)this.obtenerRegtangulo().getY() - 17 ;
+						}
+						if(this.obtenerRegtangulo().getX()>=tiles.get(i).obtenerRegtangulo().getX() && this.obtenerRegtangulo().getX()<=tiles.get(i).obtenerRegtangulo().getX() ) {
+							this.x=(int)this.obtenerRegtangulo().getX()-1-1-1-1-1-1-1-19;
+							this.y=(int)this.obtenerRegtangulo().getY() - 23 ;
+						}
+						if(this.obtenerRegtangulo().getX()<=tiles.get(i).obtenerRegtangulo().getX() && this.obtenerRegtangulo().getY()>=tiles.get(i).obtenerRegtangulo().getY() ) {
+							this.x=(int)this.obtenerRegtangulo().getX()-32;
+							this.y=(int)this.obtenerRegtangulo().getY() - 17 ;
+						}
+						if(this.obtenerRegtangulo().getX()<=tiles.get(i).obtenerRegtangulo().getX() && this.obtenerRegtangulo().getX()<=tiles.get(i).obtenerRegtangulo().getX() ) {
+							this.x=(int)this.obtenerRegtangulo().getX()-32;
+							this.y=(int)this.obtenerRegtangulo().getY() - 23 ;
+						}
+//					}
+						////
+					}
+				}
 			}
 		}
 

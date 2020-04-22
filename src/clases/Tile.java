@@ -174,14 +174,9 @@ public class Tile extends ObjetoJuego {
 				break;
 			}
 		}
+		//obtenerRegtangulo();
 
 	}
-	@Override
-	public Rectangle obtenerRegtangulo() {
-		
-		return null;
-	}
-	
 
 	@Override
 	public void pintar(GraphicsContext graficos) {
@@ -228,6 +223,12 @@ public class Tile extends ObjetoJuego {
 
 	public final void setTipotile(int tipotile) {
 		this.tipotile = tipotile;
+	}
+	public Rectangle obtenerRegtangulo() {
+		//if( tipotile == 0 ) {
+			return new Rectangle( x , -y + 700 -alto, ancho , alto );
+	//	}
+	//	return null;
 	}
 	
 }

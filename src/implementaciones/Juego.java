@@ -259,7 +259,7 @@ public class Juego extends Application{
 		lienzo = new Canvas( anchoventana, altoventana);
 		root.getChildren().add(lienzo);
 		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
-		jugadorAnimado = new JugadorAnimado( 170 , 600 , 3 , "personaje" , 0 , "descanso1" );
+		jugadorAnimado = new JugadorAnimado( 170 , 600 , 3 , "personaje" , 1 , "descanso1" );
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
 		vidaTotal = new Item(0 , 976 , 103 , 2 , "vidat" , 0 , 1 );
 		imagenes = new HashMap< String , Image>();
@@ -369,7 +369,7 @@ public class Juego extends Application{
 	}
 	public void actualizarEstado(double t) {
 		jugadorAnimado.verificarColisionesItem(vidaTotal);
-		jugadorAnimado.verificarColisionesTile(tilemaps);
+		jugadorAnimado.verificarColisionesTile(tiles);
 		jugadorAnimado.calcularFrame(t);
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
 		fondo.mover(jugadorAnimado.getY());

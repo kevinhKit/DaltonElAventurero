@@ -11,6 +11,8 @@ public class Tile extends ObjetoJuego {
 	private int anchoImagen;
 	private int altoImagen;
 	private int tipotile;
+	private static boolean avance = true;
+	private static int anulacion;
 
 	public Tile(int tipotile, int x, int y, int velocidad, String nombreimagen, int ancho, int alto) {
 		super(x, y, velocidad, nombreimagen);
@@ -178,6 +180,14 @@ public class Tile extends ObjetoJuego {
 
 	}
 
+	public static int getAnulacion() {
+		return anulacion;
+	}
+
+	public static void setAnulacion(int anulacion) {
+		Tile.anulacion = anulacion;
+	}
+
 	@Override
 	public void pintar(GraphicsContext graficos) {
 		graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, -y + 700 , ancho, -alto);
@@ -193,9 +203,13 @@ public class Tile extends ObjetoJuego {
 
 	@Override
 	public void mover(int y3) {
-		if(Juego.arriba && y3 <= 500) {
-			y-= velocidad;
+		if(avance) {
+			if(Juego.arriba && y3 <= 500) {
+				y-= velocidad - anulacion;
+				--y;
+			}
 		}
+
 //		if(Juego.abajo) {
 //			y+=velocidad;
 //		}
@@ -224,6 +238,15 @@ public class Tile extends ObjetoJuego {
 	public final void setTipotile(int tipotile) {
 		this.tipotile = tipotile;
 	}
+	
+	public boolean isAvance() {
+		return avance;
+	}
+
+	public void setAvance(boolean avance) {
+		this.avance = avance;
+	}
+
 	public Rectangle obtenerRegtangulo() {
 		//if( tipotile == 0 ) {
 			return new Rectangle( x , -y + 700 -alto, ancho , alto );

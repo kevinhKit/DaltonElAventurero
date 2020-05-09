@@ -195,18 +195,18 @@ public class Tile extends ObjetoJuego {
 //		if( nombreimagen == "tile") {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
 //		}
-//		if( nombreimagen == "tile2" ) {
-//			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
-//			//graficos.strokeOval(400, 400, 80, 100);
-//		}
+		if( nombreimagen == "tile2" ) {
+			graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
+			//graficos.strokeOval(400, 400, 80, 100);
+		}
 	}
 
 	@Override
 	public void mover(int y3) {
 		if(avance) {
-			if(Juego.arriba && y3 <= 500) {
+			if(Juego.arriba && y3 <= 500) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE
 				y-= velocidad - anulacion;
-				--y;
+				//--y;
 			}
 		}
 

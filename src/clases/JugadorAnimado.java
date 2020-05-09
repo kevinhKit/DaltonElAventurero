@@ -216,7 +216,7 @@ public class JugadorAnimado extends ObjetoJuego {
 							this.x = this.x- velocidad;
 							this.y = this.y;
 						}
-						//AQUI SE PRESENTA EL ERROR
+//AQUI SE PRESENTA EL ERROR CUANDO EL PERSONAJE ESTA DEBAJO DE UN TILE
 						if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
 								this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
 								(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&

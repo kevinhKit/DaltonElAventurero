@@ -196,7 +196,7 @@ public class Tile extends ObjetoJuego {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
 //		}
 		if( nombreimagen == "tile2" ) {
-			graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
+		//	graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
 			//graficos.strokeOval(400, 400, 80, 100);
 		}
 	}

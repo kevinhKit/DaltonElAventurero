@@ -11,8 +11,9 @@ public class Tile extends ObjetoJuego {
 	private int anchoImagen;
 	private int altoImagen;
 	private int tipotile;
-	private static boolean avance = true;
-	private static int anulacion;
+	public static boolean modoNormal=true;
+	public static boolean avance=true;
+	public static int anulacion;
 
 	public Tile(int tipotile, int x, int y, int velocidad, String nombreimagen, int ancho, int alto) {
 		super(x, y, velocidad, nombreimagen);
@@ -190,7 +191,7 @@ public class Tile extends ObjetoJuego {
 
 	@Override
 	public void pintar(GraphicsContext graficos) {
-		graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, -y + 700 , ancho, -alto);
+		graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, (modoNormal&&nombreimagen=="tile")?yImagen:50, anchoImagen, altoImagen, x, -y + 700 , ancho, -alto);
 		graficos.setStroke(Color.WHITE);
 //		if( nombreimagen == "tile") {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
@@ -201,6 +202,14 @@ public class Tile extends ObjetoJuego {
 		}
 	}
 
+	public static boolean isModoNormal() {
+		return modoNormal;
+	}
+
+	public static void setModoNormal(boolean modoNormal) {
+		Tile.modoNormal = modoNormal;
+	}
+
 	@Override
 	public void mover(int y3) {
 		if(avance) {
@@ -209,7 +218,7 @@ public class Tile extends ObjetoJuego {
 				//--y;
 			}
 		}
-
+		
 //		if(Juego.abajo) {
 //			y+=velocidad;
 //		}

@@ -34,26 +34,28 @@ public class Juego extends Application{
 	private JugadorAnimado jugadorAnimado;
 	private Fondo fondo;
 	private AnimationTimer animationTimer;
-	private Item vidaParcial;
+	//private Item vidaParcial;
 	private Item vidaTotal;
 	private Item puntos;
 	private Item escudo;
 	private Item disparo;
 	private ArrayList<Tile> tiles;
 	private ArrayList<Tile> tile2;
-//	private ArrayList<Item> items;
+	private ArrayList<Item> items;
 	public static HashMap< String, Image> imagenes;//////if corto (dirrecion==-1?20:10)
-//	private int escenarioItem[][]= {
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//			{0,0,1,2,3,4,5,6,7,8,9,10},
-//	};
+	private int escenarioItem[][]= {
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{1,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,1},
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,10},
+			{0,0,0,1,1,1,1,1,1,1,1,10}
+
+
+	};
 	private int tilemap2[][] = {
 			{0,0,0,0,1,0,2,0,3,0,2,0,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -581,7 +583,6 @@ public class Juego extends Application{
 		ventana.setTitle("DALTON EL AVENTURERO");
 		ventana.show();
 		cicloJuego();
-		
 	}
 	public void inicializarComponentes() {
 		root = new Group();
@@ -591,7 +592,7 @@ public class Juego extends Application{
 		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
 		jugadorAnimado = new JugadorAnimado( 180 , 600 , 3 , "personaje" , 1 , "descanso1" );
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
-		vidaTotal = new Item(0 , 976 , 103 , 2 , "vidat" , 0 , 1 );
+		//vidaTotal = new Item(1 , 976 , 103 , 2 , "vidat" , 0 , 1 );
 		imagenes = new HashMap< String , Image>();
 		cargarImagenes();
 		inicializarTileMaps();
@@ -614,14 +615,14 @@ public class Juego extends Application{
 				}
 			}
 		}
-//		items = new ArrayList<Item>();
-//		for ( int i = 0 ; i < escenarioItem.length ; i++ ) {
-//			for( int j = 0 ; j < escenarioItem[i].length ; j++ ) {
-//				if(escenarioItem[i][j]!=0) {
-//					this.items.add(new Item ( escenarioItem[i][j], j*80 ,i*100 , 2, "vidat", 0, 0));
-//				}
-//			}
-//		}
+		items = new ArrayList<Item>();
+		for ( int i = 0 ; i < escenarioItem.length ; i++ ) {
+			for( int j = 0 ; j < escenarioItem[i].length ; j++ ) {
+				if(escenarioItem[i][j]!=0) {
+					this.items.add(new Item ( escenarioItem[i][j],94 + j*80 ,i*100 , 2, "vidat", 0, 1));// 976 , 103 
+				}
+			}
+		}
 	}
 	public void cargarImagenes() {
 		imagenes.put( "fuego" , new Image("LIENZO1.png"));
@@ -698,7 +699,7 @@ public class Juego extends Application{
 		animationTimer.start();
 	}
 	public void actualizarEstado(double t) {
-		jugadorAnimado.verificarColisionesItem(vidaTotal);
+		jugadorAnimado.verificarColisionesItem(items);
 		jugadorAnimado.verificarColisionesTile(tiles);
 		jugadorAnimado.calcularFrame(t);
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
@@ -709,7 +710,10 @@ public class Juego extends Application{
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).mover(jugadorAnimado.getY());
 		}
-		vidaTotal.mover(jugadorAnimado.getY());
+		//vidaTotal.mover(jugadorAnimado.getY());
+		for(int i = 0 ; i < items.size() ; i++ ) {
+			items.get(i).mover(jugadorAnimado.getY());
+		}
 		
 	}
 	public void pintar() {
@@ -720,7 +724,10 @@ public class Juego extends Application{
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).pintar(graficos);
 		}
-		vidaTotal.pintar(graficos);
+		for(int i = 0 ; i < items.size() ; i++ ) {
+			//items.get(i).pintar(graficos);
+		}
+		//vidaTotal.pintar(graficos);
 		jugadorAnimado.pintar(graficos);
 		graficos.setFill(Color.AQUA);
 		graficos.fillRect(7, 10, 100, 15);

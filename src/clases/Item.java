@@ -7,6 +7,10 @@ import javafx.scene.shape.Rectangle;
 public class Item extends ObjetoJuego{
 private int puntos;
 private int vidas;
+private int xImagen;
+private int yImagen;
+private int anchoImagen;
+private int altoImagen;
 //private int tipoItem;
 private boolean capturado = false;
 
@@ -15,27 +19,51 @@ private boolean capturado = false;
 	this.puntos = puntos;
 	this.vidas = vidas;
 	//this.tipoItem = tipoItem;
+	if(nombreimagen=="vidat") {
+		switch(tipoItem) {
+			case 1:
+				 xImagen=0;
+				 yImagen=46;
+				 anchoImagen=50;
+				 altoImagen=-46;
+				 ancho=50;
+				 alto=46;
+				break;
+		}
+	}
+	if(nombreimagen=="vit") {
+		switch(tipoItem) {
+		case 1:
+			 xImagen=0;
+			 yImagen=46;
+			 anchoImagen=50;
+			 altoImagen=-46;
+			 ancho=50;
+			 alto=46;
+			break;
+		}
+	}
 }
 
 	@Override
 	public void pintar(GraphicsContext graficos) {
 		if(!capturado) {
-			graficos.drawImage(Juego.imagenes.get(nombreimagen), x, y);
+			graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen,anchoImagen,altoImagen,x,-y+700,ancho,-alto);
 		}
-		//graficos.strokeOval(x, y, 50, 45);
+		graficos.strokeOval(x, -y+700-alto, ancho, alto);
 	}
 
 	@Override
 	public void mover(int y3) {
 		if(Juego.arriba && y3 <= 500) {
-			this.y += velocidad;
+			this.y -= velocidad;
 		}
 		
 	}
 	@Override
 	public Rectangle obtenerRegtangulo() {
 		if( this.nombreimagen == "vidat") {
-			return new Rectangle(x, y, 50, 45);
+			return new Rectangle(x, -y+700-alto, ancho, alto);
 		}
 		return null;
 	}

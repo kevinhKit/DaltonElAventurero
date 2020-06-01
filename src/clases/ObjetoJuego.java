@@ -47,7 +47,10 @@ public abstract class ObjetoJuego {
 		public String getNombreimagen() {
 			return nombreimagen;
 		}
-		public void setNombreimagen(String nombreimagen) {
-			this.nombreimagen = nombreimagen;
+//		public void setNombreimagen(String nombreimagen) {
+//			this.nombreimagen = nombreimagen;
+//		} 
+		public void setNombreimagen(Object nombreimagen) {
+			this.nombreimagen = (String) nombreimagen;
 		} 
 }

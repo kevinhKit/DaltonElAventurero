@@ -16,9 +16,11 @@ public class JugadorAnimado extends ObjetoJuego {
 	private int altoImagen;
 	private int anchoImprimir = 125 ;
 	private int altoImprimir = 128 ;
+	public static int puntacion=0;
 	private String animacionActual;
 	private int direccion = 1;
 	private boolean cron=false;
+	private boolean vidaMenos=false;
 	private int a;
 	boolean b=false;
 		public JugadorAnimado(int x, int y, int velocidad, String nombreimagen, int vidas, String animacionActual) {
@@ -414,7 +416,6 @@ public class JugadorAnimado extends ObjetoJuego {
 			}else {
 				a+=1;
 				if(a==133546) {
-					System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
 					b=false;
 					cron=false;
 					Tile.modoNormal=true;
@@ -422,6 +423,37 @@ public class JugadorAnimado extends ObjetoJuego {
 			}
 
 			System.out.println(a);
+		}
+		public void verificarColisionEnemigoAnimado(EnemigoAnimado e) {
+				if(!e.isCapturado() && !vidaMenos && this.obtenerRegtangulo().getBoundsInLocal().intersects(e.obtenerRegtangulo().getBoundsInLocal())) {
+					this.vidas -= e.getVidas();
+					vidaMenos=true;
+				}
+				if(vidaMenos) {
+					cronometroVidas();
+				}
+		}
+		public void cronometroVidas() {
+			if(!b) {
+				a=1;
+				a+=1;
+				b=true;
+			}else {
+				a+=1;
+				if(a==133546) {
+					b=false;
+					cron=false;
+					Tile.modoNormal=true;
+				}
+			}
+
+			System.out.println(a);
+		}
+
+		public void actualizarvidas() {
+			if(vidas==0) {
+				System.out.println("GAME OVER");
+			}
 		}
 
 		

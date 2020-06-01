@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import clases.Ataque;
+import clases.EnemigoAnimado;
 import clases.Fondo;
 import clases.Item;
 import clases.JugadorAnimado;
@@ -38,6 +39,7 @@ public class Juego extends Application{
 	private Canvas lienzo;
 	private GraphicsContext graficos;
 	private JugadorAnimado jugadorAnimado;
+	private EnemigoAnimado enemigoAnimado;
 	private Fondo fondo;
 	private AnimationTimer animationTimer;
 	//private Item vidaParcial;
@@ -598,7 +600,7 @@ public class Juego extends Application{
 		root.getChildren().add(lienzo);
 		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
 		jugadorAnimado = new JugadorAnimado( 180 , 600 , 3 , "personaje" , 1 , "descanso2" );
-		
+		enemigoAnimado = new EnemigoAnimado(600 , 2000 , 2 , "rey" , 1 , "derecha" );
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
 		//vidaTotal = new Item(1 , 976 , 103 , 2 , "vidat" , 0 , 1 );
 		imagenes = new HashMap< String , Image>();
@@ -641,6 +643,7 @@ public class Juego extends Application{
 		imagenes.put( "tile2", new Image("arboles.png"));
 		imagenes.put( "bola" , new Image("bola.png"));
 		imagenes.put( "vidat", new Image("corazon.png"));
+		imagenes.put( "rey", new Image("rey.png"));
 	}
 	public void gestionEvento() {
 		escena.setOnKeyPressed( new EventHandler<KeyEvent>() {
@@ -654,14 +657,17 @@ public class Juego extends Application{
 				case "LEFT":
 					izquierda = true;
 					jugadorAnimado.setAnimacionActual("izquierda");
+					//enemigoAnimado.setAnimacionActual("izquierda");
 					break;
 				case "UP":
 					arriba = true;
 					jugadorAnimado.setAnimacionActual("arriba");
+					//enemigoAnimado.setAnimacionActual("arriba");
 					break;
 				case "DOWN":
 					abajo = true;
 					jugadorAnimado.setAnimacionActual("abajo");
+				//	enemigoAnimado.setAnimacionActual("abajo");
 					break;
 				case "SPACE":
 					ataques.add( new Ataque(jugadorAnimado.getX()+50,
@@ -730,9 +736,15 @@ public class Juego extends Application{
 	public void actualizarEstado(double t) {
 		jugadorAnimado.verificarColisionesItem(items);
 		jugadorAnimado.verificarColisionesTile(tiles);
+		jugadorAnimado.verificarColisionEnemigoAnimado(enemigoAnimado);
 		//jugadorAnimado.verificarColisionesTile(tile2);
 		jugadorAnimado.calcularFrame(t);
+		enemigoAnimado.calcularFrame(t);
+		for(int i = 0 ; i < ataques.size() ; i++ ) {
+			ataques.get(i).verificarColisionesEnemigoAnimado(enemigoAnimado,i,ataques);
+		}
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
+		enemigoAnimado.perseguir(jugadorAnimado);
 		fondo.mover(jugadorAnimado.getY());
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
 			//if(tiles.get(tiles.size()).getY()<=0) {
@@ -765,7 +777,7 @@ public class Juego extends Application{
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
 			tiles.get(i).pintar(graficos);
 		}
-		System.out.println(tiles.size());
+		//																		System.out.println(tiles.size());
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).pintar(graficos);
 		}
@@ -776,12 +788,15 @@ public class Juego extends Application{
 		for(int i = 0 ; i < ataques.size() ; i++ ) {
 			ataques.get(i).pintar(graficos);
 		}
+		enemigoAnimado.pintar(graficos);
 		jugadorAnimado.pintar(graficos);
 		graficos.setFill(Color.AQUA);
 		graficos.fillRect(7, 10, 100, 15);
 		graficos.setFill(Color.BLACK);//
 		graficos.fillText("VIDAS : " + jugadorAnimado.getVidas(), 32, 22);
+		System.out.println(ataques.size());
 	}
+
 	
 
 }

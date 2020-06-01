@@ -197,7 +197,7 @@ public class Tile extends ObjetoJuego {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
 //		}
 		if( nombreimagen == "tile2" ) {
-		//	graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
+			graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
 			//graficos.strokeOval(400, 400, 80, 100);
 		}
 	}
@@ -253,14 +253,16 @@ public class Tile extends ObjetoJuego {
 	}
 
 	public void setAvance(boolean avance) {
-		this.avance = avance;
+		Tile.avance = avance;
 	}
 
 	public Rectangle obtenerRegtangulo() {
-		//if( tipotile == 0 ) {
+		if( nombreimagen == "tile") {
+	//	//if( tipotile == 0 ) {
 			return new Rectangle( x , -y + 700 -alto, ancho , alto );
-	//	}
-	//	return null;
+		}
+
+		return new Rectangle( x , -y + 700 -alto, ancho , alto -10);
 	}
 	
 }

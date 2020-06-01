@@ -11,8 +11,9 @@ private int xImagen;
 private int yImagen;
 private int anchoImagen;
 private int altoImagen;
-//private int tipoItem;
 private boolean capturado = false;
+
+//private int tipoItem;
 
 	public Item(int tipoItem ,int x, int y, int velocidad, String nombreimagen, int puntos, int vidas) {
 	super(x, y, velocidad, nombreimagen);

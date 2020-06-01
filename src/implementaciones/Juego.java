@@ -2,7 +2,9 @@ package implementaciones;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
+import clases.Ataque;
 import clases.Fondo;
 import clases.Item;
 import clases.JugadorAnimado;
@@ -14,10 +16,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 
 public class Juego extends Application{
 	//DECLARACION DE VARIABLES
@@ -35,24 +41,25 @@ public class Juego extends Application{
 	private Fondo fondo;
 	private AnimationTimer animationTimer;
 	//private Item vidaParcial;
-	private Item vidaTotal;
-	private Item puntos;
-	private Item escudo;
-	private Item disparo;
+//	private Item vidaTotal;
+//	private Item puntos;
+//	private Item escudo;
+//	private Item disparo;
 	private ArrayList<Tile> tiles;
 	private ArrayList<Tile> tile2;
 	private ArrayList<Item> items;
+	private ArrayList<Ataque> ataques;
 	public static HashMap< String, Image> imagenes;//////if corto (dirrecion==-1?20:10)
 	private int escenarioItem[][]= {
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{1,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,1},
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,10},
-			{0,0,0,1,1,1,1,1,1,1,1,10}
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{1,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,1},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0}
 
 
 	};
@@ -590,14 +597,16 @@ public class Juego extends Application{
 		lienzo = new Canvas( anchoventana, altoventana);
 		root.getChildren().add(lienzo);
 		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
-		jugadorAnimado = new JugadorAnimado( 180 , 600 , 3 , "personaje" , 1 , "descanso1" );
+		jugadorAnimado = new JugadorAnimado( 180 , 600 , 3 , "personaje" , 1 , "descanso2" );
+		
 		fondo = new Fondo( 50 , 0 , 2 , "fuego" , "fuego2");
 		//vidaTotal = new Item(1 , 976 , 103 , 2 , "vidat" , 0 , 1 );
 		imagenes = new HashMap< String , Image>();
+		ataques = new ArrayList<Ataque>();
 		cargarImagenes();
-		inicializarTileMaps();
+		inicializarObjetosJuego();
 	}
-	public void inicializarTileMaps() {
+	public void inicializarObjetosJuego() {
 		tiles = new ArrayList<Tile>();
 		for ( int i = 0 ; i < tilemaps.length ; i++ ) {
 			for( int j = 0 ; j < tilemaps[i].length ; j++ ) {
@@ -655,10 +664,30 @@ public class Juego extends Application{
 					jugadorAnimado.setAnimacionActual("abajo");
 					break;
 				case "SPACE":
+					ataques.add( new Ataque(jugadorAnimado.getX()+50,
+							jugadorAnimado.getY(),
+							3,
+							"bola",
+							20,
+							1));
+
+					break;
+				case "P":
+					Alert mensaje = new Alert(AlertType.CONFIRMATION);
+					mensaje.setTitle("Salir del Juego");
+					mensaje.setHeaderText("Todos sus Avances se perderan");
+					mensaje.setContentText("¿Desea salir del juego?");
+					Optional<ButtonType> resultado = mensaje.showAndWait();
+					if(resultado.get() == ButtonType.OK) {
+					System.out.println("GAME OVER");
+					}
+					break;
+				case "V":
 					jugadorAnimado.setVelocidad(6);
 					//DESDE AQUI ACCEDO A LA VELOCIDAD DEL USUARIO Y AL TIEMPO DE DURACION QUE CAMBIAN ESTRE FRAME
 					break;
 				}	
+				
 			}		
 		});
 		escena.setOnKeyReleased( new EventHandler<KeyEvent>() {
@@ -701,11 +730,20 @@ public class Juego extends Application{
 	public void actualizarEstado(double t) {
 		jugadorAnimado.verificarColisionesItem(items);
 		jugadorAnimado.verificarColisionesTile(tiles);
+		//jugadorAnimado.verificarColisionesTile(tile2);
 		jugadorAnimado.calcularFrame(t);
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
 		fondo.mover(jugadorAnimado.getY());
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
-			tiles.get(i).mover(jugadorAnimado.getY());
+			//if(tiles.get(tiles.size()).getY()<=0) {
+				tiles.get(i).mover(jugadorAnimado.getY());
+		//	}
+
+			if(2<tiles.size()) {
+				if(tiles.get(i).getY()<-80) {
+					tiles.remove(i);
+				}
+			}
 		}
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).mover(jugadorAnimado.getY());
@@ -714,6 +752,12 @@ public class Juego extends Application{
 		for(int i = 0 ; i < items.size() ; i++ ) {
 			items.get(i).mover(jugadorAnimado.getY());
 		}
+		for(int i = 0 ; i < ataques.size() ; i++ ) {
+			ataques.get(i).mover(jugadorAnimado.getY());
+			if(ataques.get(i).getY()<-30) {
+				ataques.remove(i);
+			}
+		}
 		
 	}
 	public void pintar() {
@@ -721,19 +765,24 @@ public class Juego extends Application{
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
 			tiles.get(i).pintar(graficos);
 		}
+		System.out.println(tiles.size());
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).pintar(graficos);
 		}
 		for(int i = 0 ; i < items.size() ; i++ ) {
-			//items.get(i).pintar(graficos);
+			items.get(i).pintar(graficos);
 		}
 		//vidaTotal.pintar(graficos);
+		for(int i = 0 ; i < ataques.size() ; i++ ) {
+			ataques.get(i).pintar(graficos);
+		}
 		jugadorAnimado.pintar(graficos);
 		graficos.setFill(Color.AQUA);
 		graficos.fillRect(7, 10, 100, 15);
 		graficos.setFill(Color.BLACK);//
 		graficos.fillText("VIDAS : " + jugadorAnimado.getVidas(), 32, 22);
 	}
+	
 
 }
 //DISPAROS ENCAPSULAR COORDENA X INCREMENTAR COORDENADA Y CADA 0.25 SEGUNDOS

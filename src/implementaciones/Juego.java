@@ -735,7 +735,7 @@ public class Juego extends Application{
 		jugadorAnimado.verificarColisionesItem(items);
 		jugadorAnimado.verificarColisionesTile(tiles);
 		jugadorAnimado.verificarColisionEnemigoAnimado(enemigoAnimado);
-		jugadorAnimado.verificarColisionesTile(tile2);
+		//jugadorAnimado.verificarColisionesTile(tile2);
 		jugadorAnimado.calcularFrame(t);
 		enemigoAnimado.calcularFrame(t);
 		enemigoAnimado.verificarColisionesTile(tiles);
@@ -745,6 +745,7 @@ public class Juego extends Application{
 		}
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
 		enemigoAnimado.perseguir(jugadorAnimado);
+		enemigoAnimado.mover(0);
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
 			//if(tiles.get(tiles.size()).getY()<=0) {
 				tiles.get(i).mover(jugadorAnimado.getY());

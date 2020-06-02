@@ -23,6 +23,8 @@ public class JugadorAnimado extends ObjetoJuego {
 	private boolean vidaMenos=false;
 	private int a;
 	private boolean b=false;
+	private int aa;
+	private boolean bb=false;
 	private int acu;
 	private boolean veri;
 	
@@ -273,7 +275,6 @@ public class JugadorAnimado extends ObjetoJuego {
 									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 								this.x = this.x + velocidad;
-								this.y = this.y;
 								System.out.println("LADO IZQUIERDO");
 							}
 							if((this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
@@ -281,25 +282,21 @@ public class JugadorAnimado extends ObjetoJuego {
 									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 								this.x = this.x- velocidad;
-								this.y = this.y;
 								System.out.println("LADO DERECHO");
 							}
-	//AQUI SE PRESENTA EL ERROR CUANDO EL PERSONAJE ESTA DEBAJO DE UN TILE APARENTA DESPLAZAMIENTO PROVOCADO
 							if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
 									this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
 									(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 											this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
-								this.x = this.x;
 								this.y = this.y + velocidad;
-								
-								//////////ESTO ES GENIAL
 								tiles.get(i).setAvance(false);
-								tiles.get(i).setAnulacion(4);
 								System.out.println("ERROR 404");
 								Tile.modoNormal=false;
+								Juego.colisionObtaculoFrente=true;
 								cron=true;
-//								
-								//////////////////////
+							}
+							else {
+
 							}
 							if((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 									this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
@@ -309,69 +306,15 @@ public class JugadorAnimado extends ObjetoJuego {
 								this.y = this.y - velocidad;
 								System.out.println("jugador abajo vvvvv");
 							}
-							//EL CODIGO ANTERIOR VERIFICA COLISION CON UN SOLO TILE, TAMBIEN FUNCIONA CON VARIOS TILES A LAS VEZ PERO PODRIA DAR ERROR, POR ELLO SE CREARAN LAS SIGUIENTES CONDICIONES.
 							
-//							if( ((this.obtenerRegtangulo().getX() <= tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()) &&
-//									(this.obtenerRegtangulo().getX() >= tiles.get(i).obtenerRegtangulo().getX() + 25) &&
-//									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) &&
-//									((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//											(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//													this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) ) {
-//								this.x = this.x + velocidad;
-//								this.y = this.y + velocidad;
-//								tiles.get(i).setAvance(false);
-//								tiles.get(i).setAnulacion(2);
-//							}
-//							if( ((this.obtenerRegtangulo().getX() <= tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()) &&
-//									(this.obtenerRegtangulo().getX() >= tiles.get(i).obtenerRegtangulo().getX() + 25) &&
-//									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) &&
-//									((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//											(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//													this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) ) {
-//								this.x = this.x + velocidad;
-//								this.y = this.y - velocidad;
-//								tiles.get(i).setAvance(false);
-//								tiles.get(i).setAnulacion(2);
-//							}
-//							if( ((this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//									this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth() + 25))&&
-//									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) &&
-//									((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//											(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//													this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) ) {
-//								this.x = this.x - velocidad;
-//								this.y = this.y + velocidad;
-//								tiles.get(i).setAvance(false);
-//								tiles.get(i).setAnulacion(2);
-//							}
-//							if( ((this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//									this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth() + 25))&&
-//									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) &&
-//									((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//											(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//													this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) ) {
-//								this.x = this.x - velocidad;
-//								this.y = this.y - velocidad;
-//								tiles.get(i).setAvance(false);
-//								tiles.get(i).setAnulacion(2);
-//							}
-							
-						}else {
-							//Tile.modoNormal=true;
-							//tiles.get(i).setAvance(true);
-							//tiles.get(i).setAnulacion(0);
+						}else {							
 							if(cron) {
 								cronometro();
+							}							
+							if(Juego.colisionObtaculoFrente==true) {
+								avanzar();
+							}else {
 							}
-							//System.out.println("jajajaja");
 						}
 					}
 				}else {//para el segundo arreglo de tile.
@@ -383,36 +326,26 @@ public class JugadorAnimado extends ObjetoJuego {
 										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 							this.x = this.x + velocidad;
 							//this.y = this.y;
-							System.out.println(" jugador LADO IZQUIERDO");
 						}
 						if((this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 								this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth() + 25))&&
 								((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 							this.x = this.x- velocidad;
-						//	this.y = this.y;
-							System.out.println("jugador LADO DERECHO");
 						}
-//AQUI SE PRESENTA EL ERROR CUANDO EL PERSONAJE ESTA DEBAJO DE UN TILE APARENTA DESPLAZAMIENTO PROVOCADO
 						if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
 								this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
 								(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 										this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
-							//this.x = this.x;
 							this.y = this.y + velocidad;
-
 						}
 						if((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 								this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
 								(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 										this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
-						//	this.x = this.x;
 							this.y = this.y - velocidad;
-							System.out.println("jugador abajo");
-						}
-						
-					}
-					
+						}		
+					}	
 				}
 			}
 		}
@@ -431,6 +364,22 @@ public class JugadorAnimado extends ObjetoJuego {
 			}
 
 			//System.out.println(a);
+		}
+		public void avanzar() {
+			if(bb) {
+				aa+=1;
+				if(aa==32577) {
+					bb=false;
+					Juego.colisionObtaculoFrente=false;
+					aa=0;
+				}
+			}
+			
+			if(!bb) {
+				aa=1;
+				bb=true;
+				System.out.println("B ES FALSO");
+			}
 		}
 		public void verificarColisionEnemigoAnimado(EnemigoAnimado e) {
 				if(!e.isCapturado() && !vidaMenos && this.obtenerRegtangulo().getBoundsInLocal().intersects(e.obtenerRegtangulo().getBoundsInLocal())) {

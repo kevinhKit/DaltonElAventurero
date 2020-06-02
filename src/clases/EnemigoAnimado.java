@@ -141,7 +141,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 												jy <= ty + th)) {
 									this.x = this.x + velocidad;
 									//this.y = this.y;
-									System.out.println("LADO IZQUIERDO");
+									//System.out.println("LADO IZQUIERDO");
 								}
 								if((jx >= (tx - tw) &&
 										jx <= (tx - jw + 25))&&
@@ -149,7 +149,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 												jy <= ty + th)) {
 									this.x = this.x- velocidad;
 									//this.y = this.y;
-									System.out.println("LADO DERECHO");
+									//System.out.println("LADO DERECHO");
 								}
 								if(Juego.derecha) {
 									//System.out.println("Enemigo en la Derecha");

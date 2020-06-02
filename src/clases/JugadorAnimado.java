@@ -415,7 +415,7 @@ public class JugadorAnimado extends ObjetoJuego {
 //					t1.remove(i);
 //				}
 			}
-		}
+		}//
 
 		
 }

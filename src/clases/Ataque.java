@@ -50,13 +50,14 @@ public class Ataque extends ObjetoJuego{
 //		graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y , ancho, alto);
 //		System.out.println("pintando");
 		graficos.drawImage(Juego.imagenes.get(nombreimagen),xImagen,yImagen,anchoImagen,altoImagen,x,y,ancho,alto);
-		graficos.strokeRect(x+3, y+3,ancho-6,alto-4);
+		//graficos.strokeRect(x+3, y+3,ancho-6,alto-4);
 		}
 	}
 	@Override
 	public void mover(int y3) {
-		this.y-=this.velocidad;
-		
+		if(!capturado) {
+			this.y-=this.velocidad;
+		}
 	}
 	public void verificarColisionesEnemigoAnimado(EnemigoAnimado e1,int i,ArrayList<Ataque> ataques) {
 		if(!e1.isCapturado()&& !capturado && this.obtenerRegtangulo().getBoundsInLocal().intersects(e1.obtenerRegtangulo().getBoundsInLocal())) {

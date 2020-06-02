@@ -13,7 +13,7 @@ public class Tile extends ObjetoJuego {
 	private int tipotile;
 	public static boolean modoNormal=true;
 	public static boolean avance=true;
-	public static int anulacion;
+	public static int anulacion=15;
 
 	public Tile(int tipotile, int x, int y, int velocidad, String nombreimagen, int ancho, int alto) {
 		super(x, y, velocidad, nombreimagen);
@@ -197,7 +197,7 @@ public class Tile extends ObjetoJuego {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
 //		}
 		if( nombreimagen == "tile2" ) {
-			graficos.strokeRect( x , -y + 700 -alto, ancho , alto -10);
+			graficos.strokeRect( x +10, -y + 700 -alto, ancho-15-2 , alto -10-3);
 			//graficos.strokeOval(400, 400, 80, 100);
 		}
 	}
@@ -213,16 +213,16 @@ public class Tile extends ObjetoJuego {
 	@Override
 	public void mover(int y3) {
 		if(avance) {
-			if(Juego.arriba && y3 <= 500) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE
-				y-= velocidad - anulacion;
-				//--y;
+			if(Juego.arriba && Juego.avance) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE//y3 <= 500
+				y-=velocidad;
 			}
 		}
-		
-//		if(Juego.abajo) {
-//			y+=velocidad;
-//		}
 	}
+//	public void moverEscenario(int y3,EnemigoAnimado e1) {
+//			if(Juego.arriba && y3 <= 500) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE
+//				avance=true;
+//			}
+//		}
 
 	public final int getxImagen() {
 		return xImagen;
@@ -262,7 +262,7 @@ public class Tile extends ObjetoJuego {
 			return new Rectangle( x , -y + 700 -alto, ancho , alto );
 		}
 
-		return new Rectangle( x , -y + 700 -alto, ancho , alto -10);
+		return new Rectangle(  x +10, -y + 700 -alto, ancho-15-2 , alto -10-3);//(x , -y + 700 -alto, ancho , alto -10);
 	}
 	
 }

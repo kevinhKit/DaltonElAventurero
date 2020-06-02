@@ -51,12 +51,12 @@ private boolean capturado = false;
 		if(!capturado) {
 			graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen,anchoImagen,altoImagen,x,-y+700,ancho,-alto);
 		}
-		graficos.strokeOval(x, -y+700-alto, ancho, alto);
+		//graficos.strokeOval(x, -y+700-alto, ancho, alto);
 	}
 
 	@Override
 	public void mover(int y3) {
-		if(Juego.arriba && y3 <= 500) {
+		if(Juego.arriba && Juego.avance) {
 			this.y -= velocidad;
 		}
 		

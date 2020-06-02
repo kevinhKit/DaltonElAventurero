@@ -31,9 +31,9 @@ public class EnemigoAnimado extends ObjetoJuego{
 		}
 		public void inicializarAnimaciones(){
 			Rectangle coordenadasIzquierda[] = {
-					new Rectangle( 5 , 64 , 53 , 68 ),
-					new Rectangle( 67+3 , 64 , 53 , 68 ),
-					new Rectangle( 131+3 , 64 , 53 , 68 ),
+					new Rectangle( 5 , 64 , 53 , 64 ),
+					new Rectangle( 67+3 , 64 , 53 , 64 ),
+					new Rectangle( 131+3 , 64 , 53 , 64 ),
 			};
 			Animacion animacionIzquierda = new Animacion( 0.2 , coordenadasIzquierda);
 			animaciones.put("izquierda", animacionIzquierda);
@@ -76,7 +76,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 		public void pintar(GraphicsContext graficos) {
 			if(!capturado) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			graficos.strokeRect(x+10, y, anchoImprimir-25, altoImprimir-20);
+			//graficos.strokeRect(x+10, y, anchoImprimir-25, altoImprimir-20);
 			//graficos.strokeRect( x + 29 , y + 10 + 10 , anchoImprimir -34 -29, altoImprimir -20 - 10 -10 );
 			}
 		}
@@ -118,6 +118,62 @@ public class EnemigoAnimado extends ObjetoJuego{
 		public void verificarColisionesTile2(ArrayList<Tile> tiles) {
 		}
 		public void verificarColisionesTile(ArrayList<Tile> tiles) {
+			if(!capturado) {
+				for(int i = 0 ; i < tiles.size() ; i++ ) {
+					if(tiles.get(i).getNombreimagen()=="tile") {
+						if( tiles.get(i).getTipotile() == 3 ) {
+							if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {		
+								int jx = (int) this.obtenerRegtangulo().getX();
+								int jy = (int)this.obtenerRegtangulo().getY();
+								int jw = (int)this.obtenerRegtangulo().getWidth();
+								int jh = (int)this.obtenerRegtangulo().getHeight();
+								int tx = (int)tiles.get(i).obtenerRegtangulo().getX();
+								int ty = (int)tiles.get(i).obtenerRegtangulo().getY();
+								int tw = (int)tiles.get(i).obtenerRegtangulo().getWidth();
+								int th = (int)tiles.get(i).obtenerRegtangulo().getHeight();
+//								System.out.println(jx);
+//								System.out.println(jy);
+//								System.out.println(tx);
+//								System.out.println(ty);
+								if((jx <= tx + tw) &&
+										(jx >= tx + 25) &&
+										((jy >= ty - th) &&
+												jy <= ty + th)) {
+									this.x = this.x + velocidad;
+									//this.y = this.y;
+									System.out.println("LADO IZQUIERDO");
+								}
+								if((jx >= (tx - tw) &&
+										jx <= (tx - jw + 25))&&
+										((jy >= ty - jh) &&
+												jy <= ty + th)) {
+									this.x = this.x- velocidad;
+									//this.y = this.y;
+									System.out.println("LADO DERECHO");
+								}
+								if(Juego.derecha) {
+									//System.out.println("Enemigo en la Derecha");
+								}
+								if(Juego.izquierda) {
+									//System.out.println("Enemigo en la izquierda");
+								}
+								if(Juego.arriba&&Tile.isModoNormal()) {
+									//System.out.println("Enemigo arriba");
+								}
+								if(Juego.abajo) {
+								//	System.out.println("Enemigo abajo");
+								}
+							}
+						}
+					}
+					else{
+						if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+							tiles.remove(i);
+						}
+						
+					}
+				}
+			}
 		}
 		public void cronometro() {
 			if(!b) {
@@ -137,22 +193,37 @@ public class EnemigoAnimado extends ObjetoJuego{
 			System.out.println(a);
 		}
 		public void perseguir(JugadorAnimado p1) {
-			if(p1.getX()>this.x) {
+			if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
 				this.x+=velocidad;
 				animacionActual="derecha";
-			}else if(this.x>p1.getX()) {
+			}else if(this.obtenerRegtangulo().getX()>p1.obtenerRegtangulo().getX()) {
 				this.x-=velocidad;
 				animacionActual="izquierda";
 			}else {
-				if(p1.getY()>this.y) {
+				if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
 					this.y+=velocidad;
 					animacionActual="abajo";
 				}
-				if(this.y>p1.getY()) {
+				if(this.obtenerRegtangulo().getY()>p1.obtenerRegtangulo().getY()) {
 					this.y-=velocidad;
 					animacionActual="arriba";
 				}
 			}
+//			if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
+//				this.x+=velocidad;
+//				animacionActual="derecha";
+//			}else {
+//				this.y+=velocidad;
+//				animacionActual="abajo";
+//			}
+//			
+//			if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
+//				this.y+=velocidad;
+//				animacionActual="abajo";
+//			}else {
+//				this.y-=velocidad;
+//				animacionActual="arriba";
+//			}
 			
 		}
 		public boolean isCapturado() {

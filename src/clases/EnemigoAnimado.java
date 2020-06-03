@@ -18,7 +18,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 	private int altoImprimir = 110 ;
 	private String animacionActual;
 	private int direccion = 1;
-	private boolean cron=false;
+	//private boolean cron=false;
 	private boolean capturado = false;
 	private int a;
 	boolean b=false;
@@ -110,7 +110,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 		
 		@Override
 		public Rectangle obtenerRegtangulo() {			
-			return new Rectangle(x+10, y, anchoImprimir-25, altoImprimir-20);
+			return new Rectangle(x+10+10, y+5, anchoImprimir-25-10-7, altoImprimir-20-5);//x+10, y, anchoImprimir-25, altoImprimir-20);
 		}
 		
 		public void verificarColisionesItem(ArrayList<Item> item) {
@@ -151,18 +151,18 @@ public class EnemigoAnimado extends ObjetoJuego{
 									//this.y = this.y;
 									//System.out.println("LADO DERECHO");
 								}
-								if(Juego.derecha) {
-									//System.out.println("Enemigo en la Derecha");
-								}
-								if(Juego.izquierda) {
-									//System.out.println("Enemigo en la izquierda");
-								}
-								if(Juego.arriba&&Tile.isModoNormal()) {
-									//System.out.println("Enemigo arriba");
-								}
-								if(Juego.abajo) {
-								//	System.out.println("Enemigo abajo");
-								}
+//								if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
+//										this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
+//										(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
+//												this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
+//									this.y = this.y + velocidad;
+//								}
+//								if((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
+//										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
+//										(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
+//												this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
+//									this.y = this.y - velocidad;
+//								}	
 							}
 						}
 					}
@@ -175,32 +175,55 @@ public class EnemigoAnimado extends ObjetoJuego{
 				}
 			}
 		}
-		public void cronometro() {
-			if(!b) {
-				a=1;
-				a+=1;
-				b=true;
-			}else {
-				a+=1;
-				if(a==133546) {
-					System.out.println("hora");
-					b=false;
-					cron=false;
-					Tile.modoNormal=true;
-				}
-			}
-
-			System.out.println(a);
-		}
+//		public void cronometro() {
+//			if(!b) {
+//				a=1;
+//				a+=1;
+//				b=true;
+//			}else {
+//				a+=1;
+//				if(a==133546) {
+//					System.out.println("hora");
+//					b=false;
+//					cron=false;
+//					Tile.modoNormal=true;
+//				}
+//			}
+//
+//			System.out.println(a);
+//		}
 		public void perseguir(JugadorAnimado p1) {
-			if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
-				this.x+=velocidad;
-				animacionActual="derecha";
-			}else if(this.obtenerRegtangulo().getX()>p1.obtenerRegtangulo().getX()) {
+			if(!capturado) {
+//				if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
+//				this.x+=velocidad;
+//				animacionActual="derecha";
+//			}else if(this.obtenerRegtangulo().getX()>p1.obtenerRegtangulo().getX()) {
+//				this.x-=velocidad;
+//				animacionActual="izquierda";
+//			}else {
+//				if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
+//					this.y+=velocidad;
+//					animacionActual="abajo";
+//				}
+//				if(this.obtenerRegtangulo().getY()>p1.obtenerRegtangulo().getY()) {
+//					this.y-=velocidad;
+//					animacionActual="arriba";
+//				}
+//			}
+			
+			//NUEVA LOGICA
+			
+			if(this.obtenerRegtangulo().getX()>(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20)) {
 				this.x-=velocidad;
 				animacionActual="izquierda";
-			}else {
-				if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
+			}
+			if((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())<p1.obtenerRegtangulo().getX()+20) {
+				this.x+=velocidad;
+				animacionActual="derecha";
+			}
+			if((this.obtenerRegtangulo().getX()<=(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20))&&
+					((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())>=p1.obtenerRegtangulo().getX()+20)) {
+				if(this.obtenerRegtangulo().getY()<p1.obtenerRegtangulo().getY()) {
 					this.y+=velocidad;
 					animacionActual="abajo";
 				}
@@ -209,22 +232,8 @@ public class EnemigoAnimado extends ObjetoJuego{
 					animacionActual="arriba";
 				}
 			}
-//			if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
-//				this.x+=velocidad;
-//				animacionActual="derecha";
-//			}else {
-//				this.y+=velocidad;
-//				animacionActual="abajo";
-//			}
-//			
-//			if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
-//				this.y+=velocidad;
-//				animacionActual="abajo";
-//			}else {
-//				this.y-=velocidad;
-//				animacionActual="arriba";
-//			}
 			
+			}
 		}
 		public boolean isCapturado() {
 			return capturado;
@@ -235,3 +244,18 @@ public class EnemigoAnimado extends ObjetoJuego{
 
 		
 }
+//if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
+//this.x+=velocidad;
+//animacionActual="derecha";
+//}else {
+//this.y+=velocidad;
+//animacionActual="abajo";
+//}
+//
+//if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
+//this.y+=velocidad;
+//animacionActual="abajo";
+//}else {
+//this.y-=velocidad;
+//animacionActual="arriba";
+//}

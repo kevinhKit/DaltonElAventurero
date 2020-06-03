@@ -32,13 +32,13 @@ private boolean capturado = false;
 				break;
 		}
 	}
-	if(nombreimagen=="vit") {
+	if(nombreimagen=="escudo") {
 		switch(tipoItem) {
-		case 1:
+		case 2:
 			 xImagen=0;
-			 yImagen=46;
-			 anchoImagen=50;
-			 altoImagen=-46;
+			 yImagen=500;
+			 anchoImagen=444;
+			 altoImagen=-460;
 			 ancho=50;
 			 alto=46;
 			break;
@@ -66,7 +66,7 @@ private boolean capturado = false;
 		if( this.nombreimagen == "vidat") {
 			return new Rectangle(x, -y+700-alto, ancho, alto);
 		}
-		return null;
+		return new Rectangle(x, -y+700-alto, ancho, alto);
 	}
 
 	public int getPuntos() {

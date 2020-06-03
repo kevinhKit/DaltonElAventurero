@@ -13,7 +13,7 @@ public class Tile extends ObjetoJuego {
 	private int tipotile;
 	public static boolean modoNormal=true;
 	public static boolean avance=true;
-	public static int anulacion=15;
+	//public static int anulacion=15;
 
 	public Tile(int tipotile, int x, int y, int velocidad, String nombreimagen, int ancho, int alto) {
 		super(x, y, velocidad, nombreimagen);
@@ -181,13 +181,13 @@ public class Tile extends ObjetoJuego {
 
 	}
 
-	public static int getAnulacion() {
-		return anulacion;
-	}
-
-	public static void setAnulacion(int anulacion) {
-		Tile.anulacion = anulacion;
-	}
+//	public static int getAnulacion() {
+//		return anulacion;
+//	}
+//
+//	public static void setAnulacion(int anulacion) {
+//		Tile.anulacion = anulacion;
+//	}
 
 	@Override
 	public void pintar(GraphicsContext graficos) {

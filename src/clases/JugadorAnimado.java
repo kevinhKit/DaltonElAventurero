@@ -193,9 +193,24 @@ public class JugadorAnimado extends ObjetoJuego {
 		
 		public void verificarColisionesItem(ArrayList<Item> item) {
 			for(int i = 0 ; i < item.size() ; i++ ) {
-				if(!item.get(i).isCapturado() && this.obtenerRegtangulo().getBoundsInLocal().intersects(item.get(i).obtenerRegtangulo().getBoundsInLocal())) {
-					item.get(i).setCapturado(true);
-					this.vidas = this.vidas + item.get(i).getVidas();
+				if(item.get(i).getNombreimagen().equals("vidat")) {
+					if(!item.get(i).isCapturado() && this.obtenerRegtangulo().getBoundsInLocal().intersects(item.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+						item.get(i).setCapturado(true);
+						this.vidas = this.vidas + item.get(i).getVidas();
+					}
+				}
+				if(item.get(i).getNombreimagen().equals("escudo")) {
+					if(!item.get(i).isCapturado() && this.obtenerRegtangulo().getBoundsInLocal().intersects(item.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+						item.get(i).setCapturado(true);
+						JugadorAnimado.puntacion+=5;
+						Tile.modoNormal=false;
+						cron=true;
+					}else {
+
+						if(cron) {
+							cronometro();
+						}	
+					}
 				}
 			}
 		}
@@ -264,7 +279,6 @@ public class JugadorAnimado extends ObjetoJuego {
 //						}
 						if(!this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {
 							tiles.get(i).setAvance(true);
-							tiles.get(i).setAnulacion(0);
 						//	System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
 						}
 						if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {
@@ -289,11 +303,13 @@ public class JugadorAnimado extends ObjetoJuego {
 									(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 											this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
 								this.y = this.y + velocidad;
-								tiles.get(i).setAvance(false);
-								System.out.println("ERROR 404");
-								Tile.modoNormal=false;
 								Juego.colisionObtaculoFrente=true;
-								cron=true;
+								
+								
+								
+								
+								//tiles.get(i).setAvance(false);
+
 							}
 							else {
 
@@ -302,18 +318,12 @@ public class JugadorAnimado extends ObjetoJuego {
 									this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
 									(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 											this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
-								this.x = this.x;
 								this.y = this.y - velocidad;
-								System.out.println("jugador abajo vvvvv");
 							}
 							
-						}else {							
-							if(cron) {
-								cronometro();
-							}							
+						}else {													
 							if(Juego.colisionObtaculoFrente==true) {
 								avanzar();
-							}else {
 							}
 						}
 					}
@@ -356,14 +366,13 @@ public class JugadorAnimado extends ObjetoJuego {
 				b=true;
 			}else {
 				a+=1;
-				if(a==133546) {
+				if(a==516) {
 					b=false;
 					cron=false;
 					Tile.modoNormal=true;
 				}
 			}
-
-			//System.out.println(a);
+			System.out.println(a);
 		}
 		public void avanzar() {
 			if(bb) {
@@ -383,8 +392,20 @@ public class JugadorAnimado extends ObjetoJuego {
 		}
 		public void verificarColisionEnemigoAnimado(EnemigoAnimado e) {
 				if(!e.isCapturado() && !vidaMenos && this.obtenerRegtangulo().getBoundsInLocal().intersects(e.obtenerRegtangulo().getBoundsInLocal())) {
-					this.vidas -= e.getVidas();
-					vidaMenos=true;
+					if(!cron) {
+						this.vidas -= e.getVidas();
+						vidaMenos=true;
+						e.setY(-10);
+						System.out.println("vida perdida");
+						//e.setCapturado(true);
+					}
+					if(cron) {
+						this.vidas -= e.getVidas();
+						vidaMenos=true;
+						e.setCapturado(true);
+						JugadorAnimado.puntacion += 20;
+						System.out.println("muerto");
+					}
 				}
 				if(vidaMenos) {
 					cronometroVidas();
@@ -397,12 +418,12 @@ public class JugadorAnimado extends ObjetoJuego {
 				veri=true;
 			}else {
 				acu+=1;
-				if(acu==1000) {
+				if(acu==100) {
 					veri=false;
 					vidaMenos=false;
 				}
 			}
-			//System.out.println(acu);
+			System.out.println(acu);
 		}
 
 		public void verificarEstado(ArrayList<Tile> t1,ArrayList<Tile> t2) {

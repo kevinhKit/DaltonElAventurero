@@ -116,7 +116,7 @@ public class JugadorAnimado extends ObjetoJuego {
 		@Override
 		public void pintar(GraphicsContext graficos) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			//graficos.strokeRect( x + 29+10 , y + 10 + 10+10 , anchoImprimir -34 -29-10-3, altoImprimir -20 - 10 -10 -10);
+			graficos.strokeRect( x + 29+10 , y + 10 + 10+10 , anchoImprimir -34 -29-10-3, altoImprimir -20 - 10 -10 -10);
 		}
 		@Override
 		public void mover(int y3) {	

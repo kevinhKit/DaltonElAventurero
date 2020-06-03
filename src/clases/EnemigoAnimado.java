@@ -76,7 +76,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 		public void pintar(GraphicsContext graficos) {
 			if(!capturado) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			//graficos.strokeRect(x+10, y, anchoImprimir-25, altoImprimir-20);
+			graficos.strokeRect(x+10+10, y+5, anchoImprimir-25-10-7, altoImprimir-20-5);
 			//graficos.strokeRect( x + 29 , y + 10 + 10 , anchoImprimir -34 -29, altoImprimir -20 - 10 -10 );
 			}
 		}

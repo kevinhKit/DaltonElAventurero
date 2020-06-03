@@ -44,7 +44,7 @@ public class Juego extends Application{
 	private Canvas lienzo;
 	private GraphicsContext graficos;
 	private JugadorAnimado jugadorAnimado;
-	private EnemigoAnimado enemigoAnimado;
+	//private EnemigoAnimado enemigoAnimado;
 	private Fondo fondo;
 	private AnimationTimer animationTimer;
 	private ArrayList<Tile> tiles;
@@ -52,7 +52,19 @@ public class Juego extends Application{
 	private ArrayList<Item> items;
 	private ArrayList<Item> item2;
 	private ArrayList<Ataque> ataques;
+	private ArrayList<EnemigoAnimado> enemigos;
 	public static HashMap< String, Image> imagenes;//////if corto (dirrecion==-1?20:10)
+	private int enemigo[][]= {
+			{0,0,0,0,0,1,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,2,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0}
+	};
 	private int escenarioItem[][]= {
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
@@ -156,30 +168,14 @@ public class Juego extends Application{
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3}
+	{3,13,13,3,3,3,3,3,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+
 };
 //	private int tilemaps[][] = {
 //			{3,1,1,13,13,13,13,13,13,13,13,13,13,13,13,13,13,4,4,4,4,3},////////////////
@@ -649,7 +645,7 @@ public class Juego extends Application{
 		root.getChildren().add(lienzo);
 		graficos = lienzo.getGraphicsContext2D();//graficos.setGlobalAlpha(0.6); OPACIDAD DE INTERCEPCION ENTRE IMAGENES
 		jugadorAnimado = new JugadorAnimado( 180 , 600 , 3 , "personaje" , 3 , "descanso2" );
-		enemigoAnimado = new EnemigoAnimado(100 , 500 , 2 , "rey" , 1 , "abajo" );
+		//enemigoAnimado = new EnemigoAnimado(100 , 500 , 2 , "rey" , 1 , "abajo" );
 		fondo = new Fondo( 50 , 0 , 1 , "fuego" , "fuego2");
 		imagenes = new HashMap< String , Image>();
 		ataques = new ArrayList<Ataque>();
@@ -689,6 +685,17 @@ public class Juego extends Application{
 				}
 			}
 		}
+		enemigos = new ArrayList<EnemigoAnimado>();
+		for ( int i = 0 ; i < enemigo.length ; i++ ) {
+			for( int j = 0 ; j < enemigo[i].length ; j++ ) {
+				if(enemigo[i][j]==1) {
+						this.enemigos.add(new EnemigoAnimado (j*100 , i*110 , 2 , "rey" , 1 , "abajo" ));// 976 , 103 
+				}
+				if(enemigo[i][j]==2) {
+					this.enemigos.add(new EnemigoAnimado (j*100 , i*110 , 2 , "yaser" , 1 , "arriba" ));// 976 , 103 
+			}
+			}
+		}
 	}
 	public void cargarImagenes() {
 		imagenes.put( "fuego" , new Image("LIENZO1.png"));
@@ -700,12 +707,12 @@ public class Juego extends Application{
 		imagenes.put( "vidat", new Image("corazon.png"));
 		imagenes.put( "rey", new Image("rey.png"));
 		imagenes.put( "escudo", new Image("proteccion.png"));
+		imagenes.put( "yaser", new Image("yaser.png"));
 	}
 	public void gestionEvento() {
 		escena.setOnKeyPressed( new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent evento) {
-				System.out.println(evento.getCode().toString());
 				switch (evento.getCode().toString()) {
 				case "RIGHT":
 					derecha = true;
@@ -800,33 +807,79 @@ public class Juego extends Application{
 		jugadorAnimado.verificarColisionesItem(items);
 		jugadorAnimado.verificarColisionesItem(item2);
 		jugadorAnimado.verificarColisionesTile(tiles);
-		jugadorAnimado.verificarColisionEnemigoAnimado(enemigoAnimado);
-		//jugadorAnimado.verificarColisionesTile(tile2);
+				//jugadorAnimado.verificarColisionEnemigoAnimado(enemigoAnimado);
+		jugadorAnimado.verificarColisionEnemigoAnimado2(enemigos);
+		jugadorAnimado.verificarColisionesTile(tile2);
 		jugadorAnimado.calcularFrame(t);
-		enemigoAnimado.calcularFrame(t);
-		enemigoAnimado.verificarColisionesTile(tiles);
-		enemigoAnimado.verificarColisionesTile(tile2);
+		for(int i = 0 ; i < enemigos.size() ; i++ ) {
+			enemigos.get(i).calcularFrame(t);
+		}
+			//		enemigoAnimado.calcularFrame(t);
+			//		enemigoAnimado.verificarColisionesTile(tiles);
+			//		enemigoAnimado.verificarColisionesTile(tile2);
+		for(int i = 0 ; i < enemigos.size() ; i++ ) {
+			enemigos.get(i).verificarColisionesTile(tiles);
+			enemigos.get(i).verificarColisionesTile(tile2);
+		}
+		for(int i = 0 ; i < enemigos.size() ; i++ ) {
+			enemigos.get(i).verificarColisionesTile(tile2);
+		}
+			//		for(int i = 0 ; i < ataques.size() ; i++ ) {
+			//			ataques.get(i).verificarColisionesEnemigoAnimado(enemigoAnimado,i,ataques);
+			//		}
 		for(int i = 0 ; i < ataques.size() ; i++ ) {
-			ataques.get(i).verificarColisionesEnemigoAnimado(enemigoAnimado,i,ataques);
+			ataques.get(i).verificarColisionesEnemigoAnimado2(enemigos,i,ataques);
 		}
 		jugadorAnimado.mover(tiles.get(tiles.size()-1).getY());
-		enemigoAnimado.perseguir(jugadorAnimado);
-		enemigoAnimado.mover(0);
+			//		enemigoAnimado.perseguir(jugadorAnimado);
+			//		enemigoAnimado.mover(0);
+		for(int i = 0 ; i < enemigos.size() ; i++ ) {
+			enemigos.get(i).perseguir(jugadorAnimado);
+			enemigos.get(i).mover(0);
+		}
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
-			//if(tiles.get(tiles.size()).getY()<=0) {
+			int u=(tiles.size()-14);
 				tiles.get(i).mover(jugadorAnimado.getY());
-		//	}
-
 			if(2<tiles.size()) {
 				if(tiles.get(i).getY()<-80) {
 					tiles.remove(i);
+				}
+			}
+
+			if(2<tiles.size()) {
+				int mas=50;
+				if(tiles.get(u).getY()<600+mas) {
+					System.out.println("nuevo");
+					this.tiles.add(new Tile ( 3, 0 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 50 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 100 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 150 ,650 +mas, 2, "tile", 50, 50));					
+					this.tiles.add(new Tile ( 13, 100 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 150 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 200 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 250 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 300 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 350 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 400 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 450 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 500 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 550 ,650 +mas, 2, "tile", 50, 50));					
+					this.tiles.add(new Tile ( 13, 600 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 650 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 700 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 750 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 800 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 850 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 900 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 950 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 13, 1000 ,650 +mas, 2, "tile", 50, 50));
+					this.tiles.add(new Tile ( 3, 1050 ,650 +mas, 2, "tile", 50, 50));
 				}
 			}
 		}
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).mover(jugadorAnimado.getY());
 		}
-		//vidaTotal.mover(jugadorAnimado.getY());
 		for(int i = 0 ; i < items.size() ; i++ ) {
 			items.get(i).mover(jugadorAnimado.getY());
 		}
@@ -842,7 +895,6 @@ public class Juego extends Application{
 		for(int i = 0 ; i < tiles.size() ; i++ ) {
 			tiles.get(i).pintar(graficos);
 		}
-		//																		System.out.println(tiles.size());
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).pintar(graficos);
 		}
@@ -856,7 +908,10 @@ public class Juego extends Application{
 		for(int i = 0 ; i < ataques.size() ; i++ ) {
 			ataques.get(i).pintar(graficos);
 		}
-		enemigoAnimado.pintar(graficos);
+								//		enemigoAnimado.pintar(graficos);
+		for(int i = 0 ; i < enemigos.size() ; i++ ) {
+			enemigos.get(i).pintar(graficos);
+		}
 		jugadorAnimado.pintar(graficos);
 		graficos.setFill(Color.AQUA);
 		graficos.fillRect(7, 10, 100, 15);

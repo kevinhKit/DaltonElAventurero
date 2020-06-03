@@ -8,14 +8,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
 public class EnemigoAnimado extends ObjetoJuego{
+	private int tipoEnemigo;
 	private int vidas;
 	private HashMap< String , Animacion > animaciones;
 	private int xImagen;
 	private int yImagen;
 	private int anchoImagen;
 	private int altoImagen;
-	private int anchoImprimir = 100 ;
-	private int altoImprimir = 110 ;
+	private int anchoImprimir;
+	private int altoImprimir;
 	private String animacionActual;
 	private int direccion = 1;
 	//private boolean cron=false;
@@ -28,40 +29,84 @@ public class EnemigoAnimado extends ObjetoJuego{
 			this.animacionActual = animacionActual;
 			animaciones = new HashMap< String , Animacion >();
 			inicializarAnimaciones();
+			if(this.nombreimagen == "rey") {
+				anchoImprimir = 100 ;
+				altoImprimir = 110 ;
+			}
+			if(this.nombreimagen == "yaser") {
+				anchoImprimir = 100 ;
+				altoImprimir = 110 ;
+			}
 		}
 		public void inicializarAnimaciones(){
-			Rectangle coordenadasIzquierda[] = {
-					new Rectangle( 5 , 64 , 53 , 64 ),
-					new Rectangle( 67+3 , 64 , 53 , 64 ),
-					new Rectangle( 131+3 , 64 , 53 , 64 ),
-			};
-			Animacion animacionIzquierda = new Animacion( 0.2 , coordenadasIzquierda);
-			animaciones.put("izquierda", animacionIzquierda);
-			//NEXT
-			Rectangle coordenadasDerecha[] = {
-					new Rectangle( 5 , 128 , 55 , 64 ),
-					new Rectangle( 67+3 , 128 , 55 , 64 ),
-					new Rectangle( 131+3 , 128 , 55 , 64 ),
-			};
-			Animacion animacionDerecha = new Animacion( 0.2 , coordenadasDerecha);
-			animaciones.put("derecha", animacionDerecha);
+			if(nombreimagen=="rey") {
+				Rectangle coordenadasIzquierda[] = {
+						new Rectangle( 5 , 64 , 53 , 64 ),
+						new Rectangle( 67+3 , 64 , 53 , 64 ),
+						new Rectangle( 131+3 , 64 , 53 , 64 ),
+				};
+				Animacion animacionIzquierda = new Animacion( 0.2 , coordenadasIzquierda);
+				animaciones.put("izquierda", animacionIzquierda);
 				//NEXT
-			Rectangle coordenadasAbajo[] = {
-				new Rectangle( 5 , 0 , 53 , 64 ),
-				new Rectangle( 67+3 , 0 , 53 , 64 ),
-				new Rectangle( 131+3, 0 , 53 , 64 ),
+				Rectangle coordenadasDerecha[] = {
+						new Rectangle( 5 , 128 , 55 , 64 ),
+						new Rectangle( 67+3 , 128 , 55 , 64 ),
+						new Rectangle( 131+3 , 128 , 55 , 64 ),
+				};
+				Animacion animacionDerecha = new Animacion( 0.2 , coordenadasDerecha);
+				animaciones.put("derecha", animacionDerecha);
+					//NEXT
+				Rectangle coordenadasAbajo[] = {
+					new Rectangle( 5 , 0 , 53 , 64 ),
+					new Rectangle( 67+3 , 0 , 53 , 64 ),
+					new Rectangle( 131+3, 0 , 53 , 64 ),
 
-			};
-			Animacion animacionAbajo = new Animacion( 0.2 , coordenadasAbajo);
-			animaciones.put("abajo", animacionAbajo);
-			//NEXT
-			Rectangle coordenadasArriba[] = {
-					new Rectangle( 5 , 192 , 55 , 65 ),
-					new Rectangle( 67+3 , 192 , 55 , 65 ),
-					new Rectangle( 131+3 , 192 , 55 , 65 ),
-			};
-			Animacion animacionArriba = new Animacion( 0.2 , coordenadasArriba);
-			animaciones.put("arriba", animacionArriba);
+				};
+				Animacion animacionAbajo = new Animacion( 0.2 , coordenadasAbajo);
+				animaciones.put("abajo", animacionAbajo);
+				//NEXT
+				Rectangle coordenadasArriba[] = {
+						new Rectangle( 5 , 192 , 55 , 65 ),
+						new Rectangle( 67+3 , 192 , 55 , 65 ),
+						new Rectangle( 131+3 , 192 , 55 , 65 ),
+				};
+				Animacion animacionArriba = new Animacion( 0.2 , coordenadasArriba);
+				animaciones.put("arriba", animacionArriba);
+			}
+			if(nombreimagen=="yaser") {
+				Rectangle coordenadasIzquierda[] = {
+						new Rectangle( 0 , 79 , 73 , 79 ),
+						new Rectangle( 79+6 , 79 , 73 , 79 ),
+						new Rectangle( 161 , 79 , 73 , 79 ),
+				};
+				Animacion animacionIzquierda = new Animacion( 0.2 , coordenadasIzquierda);
+				animaciones.put("izquierda", animacionIzquierda);
+				//NEXT
+				Rectangle coordenadasDerecha[] = {
+						new Rectangle( 0 , 159 , 73 , 79 ),
+						new Rectangle( 79 , 159 , 73 , 79 ),
+						new Rectangle( 161 , 159 , 73 , 79 ),
+				};
+				Animacion animacionDerecha = new Animacion( 0.2 , coordenadasDerecha);
+				animaciones.put("derecha", animacionDerecha);
+					//NEXT
+				Rectangle coordenadasAbajo[] = {
+						new Rectangle( 0 , 0 , 73 , 79 ),
+						new Rectangle( 79+2 , 0 , 73 , 79 ),
+						new Rectangle( 161 , 0 , 73 , 79 ),
+
+				};
+				Animacion animacionAbajo = new Animacion( 0.2 , coordenadasAbajo);
+				animaciones.put("abajo", animacionAbajo);
+				//NEXT
+				Rectangle coordenadasArriba[] = {
+						new Rectangle( 0 , 239 , 73 , 79 ),
+						new Rectangle( 79+2 , 239 , 73 , 79 ),
+						new Rectangle( 161 , 239 , 73 , 79 ),
+				};
+				Animacion animacionArriba = new Animacion( 0.2 , coordenadasArriba);
+				animaciones.put("arriba", animacionArriba);
+			}
 		}
 		public void calcularFrame(double t) {
 			Rectangle coordenadas = animaciones.get(animacionActual).calcularFrameActual(t);
@@ -82,6 +127,9 @@ public class EnemigoAnimado extends ObjetoJuego{
 		}
 		@Override
 		public void mover(int y3) {	
+			if(Juego.arriba && Juego.avance) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE//y3 <= 500
+				y+=velocidad;
+			}
 		}
 		public int getVidas() {
 			return vidas;
@@ -151,18 +199,18 @@ public class EnemigoAnimado extends ObjetoJuego{
 									//this.y = this.y;
 									//System.out.println("LADO DERECHO");
 								}
-//								if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
-//										this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//										(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//												this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
+//								if((jy <= (ty + th) &&
+//										jy >= ty + 25) &&
+//										(jx >= (tx - jw) &&
+//												jx <= (tx + tw))) {
 //									this.y = this.y + velocidad;
 //								}
-//								if((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-//										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
-//										(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
-//												this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
-//									this.y = this.y - velocidad;
-//								}	
+								if((jy >= (ty - jh) &&
+										jy <= ty + 25) &&
+										(jx >= (tx - jw) &&
+												jx <= (tx + tw))) {
+									this.y = this.y - velocidad;
+								}	
 							}
 						}
 					}
@@ -240,6 +288,12 @@ public class EnemigoAnimado extends ObjetoJuego{
 		}
 		public void setCapturado(boolean capturado) {
 			this.capturado = capturado;
+		}
+		public int getTipoEnemigo() {
+			return tipoEnemigo;
+		}
+		public void setTipoEnemigo(int tipoEnemigo) {
+			this.tipoEnemigo = tipoEnemigo;
 		}
 
 		

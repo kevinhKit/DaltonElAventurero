@@ -69,6 +69,17 @@ public class Ataque extends ObjetoJuego{
 		}
 		
 	}
+	public void verificarColisionesEnemigoAnimado2(ArrayList<EnemigoAnimado> e1,int z,ArrayList<Ataque> ataques) {
+		for(int i = 0 ; i < e1.size() ; i++ ) {
+			if(!e1.get(i).isCapturado()&& !capturado && this.obtenerRegtangulo().getBoundsInLocal().intersects(e1.get(i).obtenerRegtangulo().getBoundsInLocal())) {
+				e1.get(i).setCapturado(true);
+				capturado=true;
+				JugadorAnimado.puntacion += this.puntos;
+				ataques.remove(z);
+			}else {
+			}
+		}		
+	}
 //	@Override
 //	public void pintar(GraphicsContext graficos) {
 ////		graficos.drawImage(Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y , ancho, alto);

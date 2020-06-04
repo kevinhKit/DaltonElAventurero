@@ -57,7 +57,7 @@ private boolean capturado = false;
 	@Override
 	public void mover(int y3) {
 		if(Juego.arriba && Juego.avance) {
-			this.y -= velocidad;
+			this.y -= this.velocidad;
 		}
 		
 	}

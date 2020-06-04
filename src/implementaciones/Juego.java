@@ -1,5 +1,11 @@
 package implementaciones;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -18,9 +24,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -29,7 +33,6 @@ import javafx.stage.Stage;
 
 public class Juego extends Application{
 	private final String nombreArchivo = "puntuaciones.data";
-	private ArrayList<Puntuacion> alumnos;
 	public static String Nombre;
 	private int anchoventana = 1100 ;
 	private int altoventana = 700 ;
@@ -39,6 +42,7 @@ public class Juego extends Application{
 	public static boolean abajo;
 	public static boolean avance=false;
 	public static boolean colisionObtaculoFrente=false;
+	private boolean FinJuego=false;
 	private Group root;
 	private Scene escena;
 	private Canvas lienzo;
@@ -53,12 +57,13 @@ public class Juego extends Application{
 	private ArrayList<Item> item2;
 	private ArrayList<Ataque> ataques;
 	private ArrayList<EnemigoAnimado> enemigos;
-	public static HashMap< String, Image> imagenes;//////if corto (dirrecion==-1?20:10)
+	public static HashMap< String, Image> imagenes;
+	private static ArrayList<Puntuacion> puntuaciones;
 	private int enemigo[][]= {
-			{0,0,0,0,0,1,0,0,0,0,0,0},
+			{0,0,1,0,0,0,0,0,0,2,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,2,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
@@ -71,91 +76,107 @@ public class Juego extends Application{
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,1,2,0,0,0,0,1},
+			{0,0,0,0,0,0,0,0,0,0,0,1},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0}
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{1,0,0,0,0,0,0,0,0,0,0,0}
 	};
 	private int escenarioItem2[][]= {
 			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,2,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,2,2,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0}
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{2,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,2}
 	};
 	private int tilemap2[][] = {
 			{0,0,0,0,1,0,2,0,3,0,2,0,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},////////////////////////////////
-			{0,0,0,0,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},//////////////////////
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},///////////////////////
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},//////////////////////
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,1},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,3,0,0,0,0,0,3,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,1,0,0,1,0,0,1,0,0,0},/////////////////////////////
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,1,0,1,0,0,1,0,0,1,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},////////////////////////////////
+//			{0,0,0,0,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},//////////////////////
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},///////////////////////
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},//////////////////////
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,1},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,3,0,0,0,0,0,3,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,0},
+//			{0,0,0,0,0,0,0,0,0,0,0,0,0},
+//			{0,0,0,1,0,0,1,0,0,1,0,0,0},/////////////////////////////
 	};
 	private int tilemaps[][] = {
 	{3,1,1,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
@@ -168,13 +189,12 @@ public class Juego extends Application{
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,13,13,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
 	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
-	{3,13,13,3,3,3,3,3,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3},
+	{3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3}
 
 };
 //	private int tilemaps[][] = {
@@ -633,12 +653,8 @@ public class Juego extends Application{
 		cicloJuego();
 	}
 	public void inicializarComponentes() {
-//		TextInputDialog lec = new TextInputDialog();
-//		lec.setTitle("Bienvenido a Dalton El Aventurero (2D)");
-//		lec.setHeaderText("Nombre De Jugador");
-//		lec.setContentText("Ingrese un nombre: ");
-//		Optional<String> tex = lec.showAndWait();
-//		Nombre=tex.get();
+		guardarNombre();
+		puntuaciones = new ArrayList<Puntuacion>();
 		root = new Group();
 		escena = new Scene( root , anchoventana , altoventana);
 		lienzo = new Canvas( anchoventana, altoventana);
@@ -673,7 +689,7 @@ public class Juego extends Application{
 		for ( int i = 0 ; i < escenarioItem.length ; i++ ) {
 			for( int j = 0 ; j < escenarioItem[i].length ; j++ ) {
 				if(escenarioItem[i][j]!=0) {
-						this.items.add(new Item ( escenarioItem[i][j],94 + j*80 ,i*100 , 2, "vidat", 0, 1));// 976 , 103 
+						this.items.add(new Item ( escenarioItem[i][j],94 + j*80 ,i*100 , 4, "vidat", 0, 1));// 976 , 103 
 				}
 			}
 		}
@@ -681,7 +697,7 @@ public class Juego extends Application{
 		for ( int i = 0 ; i < escenarioItem2.length ; i++ ) {
 			for( int j = 0 ; j < escenarioItem2[i].length ; j++ ) {
 				if(escenarioItem2[i][j]!=0) {
-						this.item2.add(new Item ( escenarioItem2[i][j],94 + j*80 ,i*100 , 2, "escudo", 0, 1));// 976 , 103 
+						this.item2.add(new Item ( escenarioItem2[i][j],94 + j*80 ,i*100 , 4, "escudo", 0, 1));// 976 , 103 
 				}
 			}
 		}
@@ -692,7 +708,7 @@ public class Juego extends Application{
 						this.enemigos.add(new EnemigoAnimado (j*100 , i*110 , 2 , "rey" , 1 , "abajo" ));// 976 , 103 
 				}
 				if(enemigo[i][j]==2) {
-					this.enemigos.add(new EnemigoAnimado (j*100 , i*110 , 2 , "yaser" , 1 , "arriba" ));// 976 , 103 
+					this.enemigos.add(new EnemigoAnimado (j*100 , i*110-200 , 2 , "yaser" , 1 , "arriba" ));// 976 , 103 
 			}
 			}
 		}
@@ -741,23 +757,10 @@ public class Juego extends Application{
 							20,
 							1));
 					break;
-				case "ESCAPE":
-
-					break;
-				case "P":
-					Alert mensaje = new Alert(AlertType.CONFIRMATION);
-					mensaje.setTitle("Salir del Juego");
-					mensaje.setHeaderText("Todos sus Avances se perderan");
-					mensaje.setContentText("¿Desea salir del juego?");
-					Optional<ButtonType> resultado = mensaje.showAndWait();
-					if(resultado.get() == ButtonType.OK) {
-					System.out.println("GAME OVER");
-					}
-					break;
-				case "V":
-					jugadorAnimado.setVelocidad(6);
-					//DESDE AQUI ACCEDO A LA VELOCIDAD DEL USUARIO Y AL TIEMPO DE DURACION QUE CAMBIAN ESTRE FRAME
-					break;
+//				case "V":
+//					jugadorAnimado.setVelocidad(6);
+//					//DESDE AQUI ACCEDO A LA VELOCIDAD DEL USUARIO Y AL TIEMPO DE DURACION QUE CAMBIAN ESTRE FRAME
+//					break;
 				}	
 			}		
 		});
@@ -787,20 +790,19 @@ public class Juego extends Application{
 	}
 	public void cicloJuego() {
 		long tiempoInicial = System.nanoTime();
-		animationTimer = new AnimationTimer() {
-			@Override
-			public void handle(long tiempoActual) {
-				double t = ( tiempoActual - tiempoInicial ) / 1000000000.0 ;
-				//System.out.println(t);
-				actualizarEstado(t);
-				pintar();
-			}	
-		};
-		animationTimer.start();
+			animationTimer = new AnimationTimer() {
+					@Override
+					public void handle(long tiempoActual) {
+							double t = ( tiempoActual - tiempoInicial ) / 1000000000.0 ;
+							actualizarEstado(t);
+							pintar();
+					}	
+			};							
+			animationTimer.start();
 	}
 	public void actualizarEstado(double t) {
 		if(jugadorAnimado.getVidas()==0) {
-			finDelJuego();
+			guardarPuntuacionesJugador();
 		}
 		jugadorAnimado.verificarEstado(tiles, tile2);
 		fondo.mover(jugadorAnimado.getY());
@@ -849,7 +851,6 @@ public class Juego extends Application{
 			if(2<tiles.size()) {
 				int mas=50;
 				if(tiles.get(u).getY()<600+mas) {
-					System.out.println("nuevo");
 					this.tiles.add(new Tile ( 3, 0 ,650 +mas, 2, "tile", 50, 50));
 					this.tiles.add(new Tile ( 13, 50 ,650 +mas, 2, "tile", 50, 50));
 					this.tiles.add(new Tile ( 13, 100 ,650 +mas, 2, "tile", 50, 50));
@@ -878,10 +879,45 @@ public class Juego extends Application{
 			}
 		}
 		for(int i = 0 ; i < tile2.size() ; i++ ) {
+			int u=(tile2.size()-1);
+				tile2.get(i).mover(jugadorAnimado.getY());
+			if(2<tile2.size()) {
+				if(tile2.get(i).getY()<-80) {
+					tile2.remove(i);
+				}
+			}
+
+			if(2<tile2.size()) {
+				if(tile2.get(u).getY()+200<=700) {
+					this.tile2.add(new Tile ( 1, 80 ,720 , 2, "tile2", 80, 100));
+					this.tile2.add(new Tile ( 1, 240 ,720 , 2, "tile2", 80, 100));
+					this.tile2.add(new Tile ( 1, 480 ,720 , 2, "tile2", 80, 100));
+					this.tile2.add(new Tile ( 1, 720 ,720 , 2, "tile2", 80, 100));
+					this.tile2.add(new Tile ( 1, 960 ,720 , 2, "tile2", 80, 100));
+
+				}
+			}
+			if(enemigos.size()==0) {
+
+					this.enemigos.add(new EnemigoAnimado (100 , -800 , 2 , "rey" , 1 , "abajo" ));
+					this.enemigos.add(new EnemigoAnimado (300 , -200 , 2 , "yaser" , 1 , "abajo" ));
+
+//				if(enemigo[i][j]==2) {
+//					this.enemigos.add(new EnemigoAnimado (300 , 0 , 2 , "yaser" , 1 , "abajo" ));
+//				}
+			}
+			
+			if(tile2.get(u).getY()<=700) {
+			}
+		}
+		for(int i = 0 ; i < tile2.size() ; i++ ) {
 			tile2.get(i).mover(jugadorAnimado.getY());
 		}
 		for(int i = 0 ; i < items.size() ; i++ ) {
 			items.get(i).mover(jugadorAnimado.getY());
+		}
+		for(int i = 0 ; i < item2.size() ; i++ ) {
+			item2.get(i).mover(jugadorAnimado.getY());
 		}
 		for(int i = 0 ; i < ataques.size() ; i++ ) {
 			ataques.get(i).mover(jugadorAnimado.getY());
@@ -926,11 +962,61 @@ public class Juego extends Application{
 //		graficos.setFill(Color.BLACK);
 //		graficos.fillText("JUGADOR : " + Juego.nOMBRE, 32, 44);//288+300+300, 22
 	}
-	public void finDelJuego() {
+	public void guardarNombre() {
+		TextInputDialog lec = new TextInputDialog();
+		lec.setTitle("Bienvenido a Dalton El Aventurero (2D)");
+		lec.setHeaderText("Nombre De Jugador");
+		lec.setContentText("Ingrese un nombre: ");
+		Optional<String> tex = lec.showAndWait();
+		Nombre=tex.get();
 		
 	}
 	public void leerPuntuacionesJugador() {
 		
+	}
+
+	private static void leerPuntuaciones() {
+		String linea="";
+		String informacion="";
+		try {
+			BufferedReader flujo = new BufferedReader(new FileReader("puntuaciones.csv"));
+			while ((linea=flujo.readLine())!=null) {
+				String campo[]=linea.split(",");
+				puntuaciones.add(new Puntuacion(campo[0],Integer.parseInt(campo[1])));
+				informacion+=campo[0]+":"+campo[1]+"\n";
+			}
+			flujo.close();
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no hay puntuaciones");
+		}catch (IOException e) {
+			System.out.println(".");
+		}
+		//NOSE PUEDE OTRA LIBRERIA QUE NO SEA JAVAFX
+		//JOptionPane.showMessageDialog(null, "puntuacion:"+"\n"+informacion);
+		
+	}
+	
+	public static void guardarPuntuacionesJugador() {
+		Puntuacion p = new Puntuacion(Nombre,JugadorAnimado.puntacion);
+		puntuaciones.add(p);
+		try {
+			BufferedWriter archivo=new BufferedWriter(new FileWriter("puntuaciones.csv",true));
+			archivo.write(p.toString());
+			archivo.flush();
+			archivo.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		leerPuntuaciones();
+		
+		
+		
+		System.exit(0);
 	}
 	
 

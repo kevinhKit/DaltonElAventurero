@@ -20,6 +20,10 @@ public class Puntuacion {
 	public void setPuntuacion(long puntuacion) {
 		this.puntuacion = puntuacion;
 	}
+	@Override
+	public String toString() {
+		return "Puntuacion [jugador=" + jugador + ", puntuacion=p" + puntuacion + "]";
+	}
 	
 	
 }

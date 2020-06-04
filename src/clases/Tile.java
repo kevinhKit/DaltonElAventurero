@@ -197,7 +197,7 @@ public class Tile extends ObjetoJuego {
 //			graficos.strokeRect( x , -y + 700 -alto, ancho , alto );
 //		}
 		if( nombreimagen == "tile2" ) {
-			graficos.strokeRect( x +10, -y + 700 -alto, ancho-15-2 , alto -10-3);
+			//graficos.strokeRect( x +10, -y + 700 -alto, ancho-15-2 , alto -10-3);
 			//graficos.strokeOval(400, 400, 80, 100);
 		}
 	}
@@ -212,11 +212,9 @@ public class Tile extends ObjetoJuego {
 
 	@Override
 	public void mover(int y3) {
-		if(avance) {
 			if(Juego.arriba && Juego.avance) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE//y3 <= 500
-				y-=velocidad;
+				y-=this.velocidad;
 			}
-		}
 	}
 //	public void moverEscenario(int y3,EnemigoAnimado e1) {
 //			if(Juego.arriba && y3 <= 500) {// Y APARTE QUE AVANCE==FALSE Y LISTO CREO JEJEJE

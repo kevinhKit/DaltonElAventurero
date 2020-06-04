@@ -26,8 +26,7 @@ public class JugadorAnimado extends ObjetoJuego {
 	private int aa;
 	private boolean bb=false;
 	private int acu;
-	private boolean veri;
-	
+	private boolean veri;	
 		public JugadorAnimado(int x, int y, int velocidad, String nombreimagen, int vidas, String animacionActual) {
 			super(x, y, velocidad, nombreimagen);
 			this.vidas = vidas;
@@ -111,12 +110,10 @@ public class JugadorAnimado extends ObjetoJuego {
 			this.anchoImagen = (int)coordenadas.getWidth();
 			this.altoImagen = (int)coordenadas.getHeight();
 		}
-		
-		//METODOS SOBREESCRITOS POR HERENCIA Y ABSTRACCION
 		@Override
 		public void pintar(GraphicsContext graficos) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			graficos.strokeRect( x + 29+10 , y + 10 + 10+10 , anchoImprimir -34 -29-10-3, altoImprimir -20 - 10 -10 -10);
+			//graficos.strokeRect( x + 29+10 , y + 10 + 10+10 , anchoImprimir -34 -29-10-3, altoImprimir -20 - 10 -10 -10);
 		}
 		@Override
 		public void mover(int y3) {	
@@ -130,18 +127,7 @@ public class JugadorAnimado extends ObjetoJuego {
 			}
 			if( y >= 631) {
 				this.y = 630 ;
-			}/////////////COLOCAR QUE NO SALGA DE LA PANTALLA EL PERSONAJE SINO QUE SOLO DEL CENTRO DEL ESCENARIO PUEDA AVANZAR
-//												if( x <= 32 ) {
-//													this.x = 32;
-//												}
-//			if(y3<=500) {
-//				if( x >= 1050 ) {
-//					this.x = -32;
-//				}
-//			}////////////////////////////////////////
-//			if( x >= 956 ) {
-//				this.x = 955;
-//			}////////////////////
+			}
 			if( x >= 1000 ) {
 				this.x = -100;
 			}
@@ -185,12 +171,10 @@ public class JugadorAnimado extends ObjetoJuego {
 		public void setY(int y) {
 			this.y = y;
 		}
-		
 		@Override
 		public Rectangle obtenerRegtangulo() {			
 			return new Rectangle(x + 29+10 , y + 10 + 10 +10, anchoImprimir -34 -29-10-3, altoImprimir -20 - 10 -10 -10);
 		}
-		
 		public void verificarColisionesItem(ArrayList<Item> item) {
 			for(int i = 0 ; i < item.size() ; i++ ) {
 				if(item.get(i).getNombreimagen().equals("vidat")) {
@@ -214,53 +198,53 @@ public class JugadorAnimado extends ObjetoJuego {
 				}
 			}
 		}
-		public void verificarColisionesTile2(ArrayList<Tile> tiles) {
-			for(int i = 0 ; i < tiles.size() ; i++ ) {
-				if( tiles.get(i).getTipotile() == 3 ) {
-					if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {		
-						int jx = (int) this.obtenerRegtangulo().getX();
-						int jy = (int)this.obtenerRegtangulo().getY();
-						int tx = (int)tiles.get(i).obtenerRegtangulo().getX();
-						int ty = (int)tiles.get(i).obtenerRegtangulo().getY();
-						int tw = (int)tiles.get(i).obtenerRegtangulo().getWidth();
-						int th = (int)tiles.get(i).obtenerRegtangulo().getHeight();
-						System.out.println(jx);
-						System.out.println(jy);
-						System.out.println(tx);
-						System.out.println(ty);
-						if((jx <= tx + tw) &&
-								(jx >= tx + 25) &&
-								((jy >= ty - th) &&
-										jy <= ty + th)) {
-							this.x = this.x + velocidad;
-							//this.y = this.y;
-							System.out.println("LADO IZQUIERDO");
-						}
-						if((jx >= (tx - tw) &&
-								jx <= (tx - this.obtenerRegtangulo().getWidth() + 25))&&
-								((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
-										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
-							this.x = this.x- velocidad;
-							//this.y = this.y;
-							System.out.println("LADO DERECHO");
-						}
-						if(Juego.derecha) {
-							System.out.println("Jugador en la Derecha");
-						}
-						if(Juego.izquierda) {
-							System.out.println("Jugador en la izquierda");
-						}
-						if(Juego.arriba&&Tile.isModoNormal()) {
-							System.out.println("Jugador arriba");
-						}
-						if(Juego.abajo) {
-							System.out.println("Jugador abajo");
-						}
-					}
-				}
-			}
-			
-		}
+//		public void verificarColisionesTile2(ArrayList<Tile> tiles) {
+//			for(int i = 0 ; i < tiles.size() ; i++ ) {
+//				if( tiles.get(i).getTipotile() == 3 ) {
+//					if(this.obtenerRegtangulo().getBoundsInLocal().intersects(tiles.get(i).obtenerRegtangulo().getBoundsInLocal())) {		
+//						int jx = (int) this.obtenerRegtangulo().getX();
+//						int jy = (int)this.obtenerRegtangulo().getY();
+//						int tx = (int)tiles.get(i).obtenerRegtangulo().getX();
+//						int ty = (int)tiles.get(i).obtenerRegtangulo().getY();
+//						int tw = (int)tiles.get(i).obtenerRegtangulo().getWidth();
+//						int th = (int)tiles.get(i).obtenerRegtangulo().getHeight();
+//						System.out.println(jx);
+//						System.out.println(jy);
+//						System.out.println(tx);
+//						System.out.println(ty);
+//						if((jx <= tx + tw) &&
+//								(jx >= tx + 25) &&
+//								((jy >= ty - th) &&
+//										jy <= ty + th)) {
+//							this.x = this.x + velocidad;
+//							//this.y = this.y;
+//							System.out.println("LADO IZQUIERDO");
+//						}
+//						if((jx >= (tx - tw) &&
+//								jx <= (tx - this.obtenerRegtangulo().getWidth() + 25))&&
+//								((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
+//										this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
+//							this.x = this.x- velocidad;
+//							//this.y = this.y;
+//							System.out.println("LADO DERECHO");
+//						}
+//						if(Juego.derecha) {
+//							System.out.println("Jugador en la Derecha");
+//						}
+//						if(Juego.izquierda) {
+//							System.out.println("Jugador en la izquierda");
+//						}
+//						if(Juego.arriba&&Tile.isModoNormal()) {
+//							System.out.println("Jugador arriba");
+//						}
+//						if(Juego.abajo) {
+//							System.out.println("Jugador abajo");
+//						}
+//					}
+//				}
+//			}
+//			
+//		}
 		public void verificarColisionesTile(ArrayList<Tile> tiles) {
 			for(int i = 0 ; i < tiles.size() ; i++ ) {
 				if(tiles.get(i).getNombreimagen()=="tile") {
@@ -274,14 +258,14 @@ public class JugadorAnimado extends ObjetoJuego {
 									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 								this.x = this.x + velocidad;
-								System.out.println("LADO IZQUIERDO");
+								//System.out.println("LADO IZQUIERDO");
 							}
 							if((this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 									this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth() + 25))&&
 									((this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 											this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight())) {
 								this.x = this.x- velocidad;
-								System.out.println("LADO DERECHO");
+								//System.out.println("LADO DERECHO");
 							}
 							if((this.obtenerRegtangulo().getY() <= (tiles.get(i).obtenerRegtangulo().getY() + tiles.get(i).obtenerRegtangulo().getHeight()) &&
 									this.obtenerRegtangulo().getY() >= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
@@ -327,6 +311,7 @@ public class JugadorAnimado extends ObjetoJuego {
 								(this.obtenerRegtangulo().getX() >= (tiles.get(i).obtenerRegtangulo().getX() - this.obtenerRegtangulo().getWidth()) &&
 										this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
 							this.y = this.y + velocidad;
+							Juego.colisionObtaculoFrente=true;
 						}
 						if((this.obtenerRegtangulo().getY() >= (tiles.get(i).obtenerRegtangulo().getY() - this.obtenerRegtangulo().getHeight()) &&
 								this.obtenerRegtangulo().getY() <= tiles.get(i).obtenerRegtangulo().getY() + 25) &&
@@ -334,7 +319,11 @@ public class JugadorAnimado extends ObjetoJuego {
 										this.obtenerRegtangulo().getX() <= (tiles.get(i).obtenerRegtangulo().getX() + tiles.get(i).obtenerRegtangulo().getWidth()))) {
 							this.y = this.y - velocidad;
 						}		
-					}	
+					}	else {
+						if(Juego.colisionObtaculoFrente==true) {
+							avanzar();
+						}
+					}
 				}
 			}
 		}
@@ -351,7 +340,6 @@ public class JugadorAnimado extends ObjetoJuego {
 					Tile.modoNormal=true;
 				}
 			}
-			System.out.println(a);
 		}
 		public void avanzar() {
 			if(bb) {
@@ -362,12 +350,10 @@ public class JugadorAnimado extends ObjetoJuego {
 					aa=0;
 				}
 			}
-			
 			if(!bb) {
 				aa=1;
 				bb=true;
 			}
-			System.out.println(aa);
 		}
 		public void verificarColisionEnemigoAnimado(EnemigoAnimado e) {
 				if(!e.isCapturado() && !vidaMenos && this.obtenerRegtangulo().getBoundsInLocal().intersects(e.obtenerRegtangulo().getBoundsInLocal())) {
@@ -376,11 +362,8 @@ public class JugadorAnimado extends ObjetoJuego {
 						vidaMenos=true;
 						e.setY(-10);
 						System.out.println("vida perdida");
-						//e.setCapturado(true);
 					}
 					if(cron) {
-						//this.vidas -= e.getVidas();
-						//vidaMenos=true;
 						e.setCapturado(true);
 						JugadorAnimado.puntacion += 20;
 						System.out.println("muerto");
@@ -398,7 +381,7 @@ public class JugadorAnimado extends ObjetoJuego {
 						vidaMenos=true;
 						int s = e.get(i).getY();
 						e.get(i).setY(s-400);
-						System.out.println("vida perdida");
+						//System.out.println("vida perdida");
 						//e.setCapturado(true);
 					}
 					if(cron) {
@@ -413,7 +396,6 @@ public class JugadorAnimado extends ObjetoJuego {
 					cronometroVidas();
 				}
 			}
-
 		}
 		public void cronometroVidas() {
 			if(!veri) {
@@ -427,20 +409,9 @@ public class JugadorAnimado extends ObjetoJuego {
 					vidaMenos=false;
 				}
 			}
-			//System.out.println(acu);
 		}
-
 		public void verificarEstado(ArrayList<Tile> t1,ArrayList<Tile> t2) {
 			if(vidas==0) {
-//				System.out.println("GAME OVER");
-//				for(int i = 0 ; i < t2.size() ; i++ ) {
-//					t2.remove(i);
-//				}
-//				for(int i = 0 ; i < t1.size() ; i++ ) {
-//					t1.remove(i);
-//				}
 			}
-		}//
-
-		
+		}	
 }

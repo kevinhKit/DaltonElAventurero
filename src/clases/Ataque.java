@@ -73,6 +73,7 @@ public class Ataque extends ObjetoJuego{
 		for(int i = 0 ; i < e1.size() ; i++ ) {
 			if(!e1.get(i).isCapturado()&& !capturado && this.obtenerRegtangulo().getBoundsInLocal().intersects(e1.get(i).obtenerRegtangulo().getBoundsInLocal())) {
 				e1.get(i).setCapturado(true);
+				e1.remove(i);
 				capturado=true;
 				JugadorAnimado.puntacion += this.puntos;
 				ataques.remove(z);

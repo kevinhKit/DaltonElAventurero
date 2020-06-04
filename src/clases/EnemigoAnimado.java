@@ -121,7 +121,7 @@ public class EnemigoAnimado extends ObjetoJuego{
 		public void pintar(GraphicsContext graficos) {
 			if(!capturado) {
 			graficos.drawImage( Juego.imagenes.get(nombreimagen), xImagen, yImagen, anchoImagen, altoImagen, x, y, anchoImprimir, altoImprimir );
-			graficos.strokeRect(x+10+10, y+5, anchoImprimir-25-10-7, altoImprimir-20-5);
+			//graficos.strokeRect(x+10+10, y+5, anchoImprimir-25-10-7, altoImprimir-20-5);
 			//graficos.strokeRect( x + 29 , y + 10 + 10 , anchoImprimir -34 -29, altoImprimir -20 - 10 -10 );
 			}
 		}
@@ -242,45 +242,25 @@ public class EnemigoAnimado extends ObjetoJuego{
 //		}
 		public void perseguir(JugadorAnimado p1) {
 			if(!capturado) {
-//				if(p1.obtenerRegtangulo().getX()>this.obtenerRegtangulo().getX()) {
-//				this.x+=velocidad;
-//				animacionActual="derecha";
-//			}else if(this.obtenerRegtangulo().getX()>p1.obtenerRegtangulo().getX()) {
-//				this.x-=velocidad;
-//				animacionActual="izquierda";
-//			}else {
-//				if(p1.obtenerRegtangulo().getY()>this.obtenerRegtangulo().getY()) {
-//					this.y+=velocidad;
-//					animacionActual="abajo";
-//				}
-//				if(this.obtenerRegtangulo().getY()>p1.obtenerRegtangulo().getY()) {
-//					this.y-=velocidad;
-//					animacionActual="arriba";
-//				}
-//			}
-			
-			//NUEVA LOGICA
-			
-			if(this.obtenerRegtangulo().getX()>(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20)) {
-				this.x-=velocidad;
-				animacionActual="izquierda";
-			}
-			if((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())<p1.obtenerRegtangulo().getX()+20) {
-				this.x+=velocidad;
-				animacionActual="derecha";
-			}
-			if((this.obtenerRegtangulo().getX()<=(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20))&&
-					((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())>=p1.obtenerRegtangulo().getX()+20)) {
-				if(this.obtenerRegtangulo().getY()<p1.obtenerRegtangulo().getY()) {
-					this.y+=velocidad;
-					animacionActual="abajo";
+				if(this.obtenerRegtangulo().getX()>(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20)) {
+					this.x-=velocidad;
+					animacionActual="izquierda";
 				}
-				if(this.obtenerRegtangulo().getY()>p1.obtenerRegtangulo().getY()) {
-					this.y-=velocidad;
-					animacionActual="arriba";
+				if((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())<p1.obtenerRegtangulo().getX()+20) {
+					this.x+=velocidad;
+					animacionActual="derecha";
 				}
-			}
-			
+				if((this.obtenerRegtangulo().getX()<=(p1.obtenerRegtangulo().getX()+p1.obtenerRegtangulo().getWidth()-20))&&
+						((this.obtenerRegtangulo().getX()+this.obtenerRegtangulo().getWidth())>=p1.obtenerRegtangulo().getX()+20)) {
+					if(this.obtenerRegtangulo().getY()<p1.obtenerRegtangulo().getY()) {
+						this.y+=velocidad;
+						animacionActual="abajo";
+					}
+					if(this.obtenerRegtangulo().getY()>p1.obtenerRegtangulo().getY()) {
+						this.y-=velocidad;
+						animacionActual="arriba";
+					}
+				}
 			}
 		}
 		public boolean isCapturado() {
